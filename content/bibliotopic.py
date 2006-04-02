@@ -54,7 +54,7 @@ from Products.ATBiblioTopic.config import BIBLIOTOPIC_SORTFIELDS
 from Products.ATBiblioTopic.config import BIBLIOTOPIC_INDEXES
 
 # possible types of bibliographic references from module 'CMFBibliographyAT'
-from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types, \
+from Products.CMFBibliographyAT.config import REFERENCE_TYPES, \
      FOLDER_TYPES as BIB_FOLDER_TYPES, \
      ADD_CONTENT_PERMISSION as BIBFOLDER_ADD_CONTENT_PERMISSION
           
@@ -229,6 +229,13 @@ class BibliographyTopic(ATTopic):
 
     security = ClassSecurityInfo()
 
+    security.declareProtected(permissions.View, 'vocabCustomStyle')
+    def vocabCustomStyle(self):
+        """ build a DisplayList based on existing styles
+        """
+        bstool = getToolByName(self, 'portal_bibliostyles') or None
+        return DisplayList(bstool.findBibrefStyles())
+                                    
     #security.declareProtected(atct_permissions.ChangeTopics, 'getSortCriterion')
     #def getSortCriterion(self):
     #   """return criterion object"""
@@ -258,7 +265,6 @@ class BibliographyTopic(ATTopic):
         mtool = getToolByName(self, 'portal_membership')
 
         if not acquire and not criteria:
-	  print 'query is NONE'
           return None 
 
         #print "init %s: %s" % (self.portal_type_to_query, query)
@@ -266,28 +272,19 @@ class BibliographyTopic(ATTopic):
         if acquire:
             try: 
                 parent = aq_parent(aq_inner(self))
-                parent.setPortalTypeToQuery(self.portal_type_to_query)
                 query.update(parent.buildQuery(**kw))
             except (AttributeError, Unauthorized):
                 pass
                     
-        for criterion in criteria:
-        
-            remove_sort_order = False
-  	    remove_sortcrits_from_query = [ crit_field['field'][0] for crit_field in BIBLIOTOPIC_SORTFIELDS ]
+                
+        for criterion in criteria:        
+
             for key, value in criterion.getCriteriaItems():
-                if (key == 'sort_on') and (value in remove_sortcrits_from_query):
-                    remove_sort_order = True
-                    pass    
-                else:      
-                    query[key] = value
-                    
-            if remove_sort_order:
-                try:
-                    del query['sort_order']        
-                except: 
-                    pass
-        
+            
+                query[key] = value
+
+        query['portal_type'] = tuple(REFERENCE_TYPES)
+
         print query
 
         return query or None
