@@ -11,9 +11,11 @@
 """
 
 import os
+from Products.CMFCore.permissions import AddPortalContent
 from Products.Archetypes.public import DisplayList
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES
 from Products.ATContentTypes.tool.topic import TopicIndex
+from ZPublisher.HTTPRequest import record
 
 GLOBALS = globals()
 ADD_CONTENT_PERMISSION = AddPortalContent
@@ -21,7 +23,7 @@ PROJECTNAME = "ATBiblioTopic"
 SKINS_DIR = 'skins'
 ATBT_DIR = os.path.abspath(os.path.dirname(__file__))
 
-ATBIBTOPIC_BIBFOLDER_REF = 'ATBiblioTopic_associated_bibfolder'
+ATBIBLIOTOPIC_BIBFOLDER_REF = 'ATBiblioTopic_associated_bibfolder'
 REFERENCE_ALLOWED_TYPES = [tn.replace(' Reference', 'Reference') for tn in REFERENCE_TYPES]
 LISTING_VALUES = DisplayList((
     ('bulleted', 'Bulleted list'),
@@ -40,7 +42,7 @@ try:
     ting2_extra.use_converters   = 1
     text_index_type = { 'type': 'TextIndexNG2', 'extra': ting2_extra, }
     
-except ImportError
+except ImportError:
     # do not at all touch zcti_extra, it is needed to created ZCTextIndex catalog indexes
     zcti_extra = record()
     zcti_extra.lexicon_id = 'plone_lexicon'
@@ -52,28 +54,33 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
     {
 	'field'		: ('SearchableText', 'Search all reference item text fields',
 			   'This criterion looks at all searchable text passages in bibliographical reference items.', '', ),
+        'custom_view'   : False,                   
         'index_type'    : text_index_type,
 	'ctypes'	: ('ATSimpleStringCriterion', )
     },	
     {
-	'field'		: ( 'publication_year', 'Publication year of the referenced bibliographical item',''),
+	'field'		: ( 'publication_year', 'Publication Year', 'Publication year of the referenced bibliographical item',),
+        'custom_view'   : True,                   
         'index_type'    : { 'type': 'DateIndex', },
 	'ctypes'	: ( 'ATDateRangeCriterion', 'ATFriendlyDateCriteria',)
     },	
     {
-	'field'		: ('Title','Title of the referenced bibliography item',''),
+	'field'		: ('sort_title','Title', 'Title of the referenced bibliography item',''),
+        'custom_view'   : True,                   
         'index_type'    : text_index_type,
 	'ctypes'	: ('ATSimpleStringCriterion',)
     },	
 ]
 BIBLIOTOPIC_SORTFIELDS = [
     {
-	'field'		: ( 'publication_year','Publication year of the referenced bibliographical item',''),
+	'field'		: ( 'publication_year', 'Publication Year', 'Publication year of the referenced bibliographical item',),
+        'custom_view'   : True,                   
         'index_type'    : { 'type': 'DateIndex', },
 	'ctypes'	: ('ATSortCriterion', 'ATDateRangeCriterion', 'ATFriendlyDateCriteria',)
     },	
 #    {
 #	'field'		: ('Author','Author of referenced bibliographical item',''),
+#        'custom_view'   : True,                   
 #        'index_type'    : { 'type': 'FieldIndex', },
 #	'ctypes'	: ('ATSortCriterion', 'ATDateRangeCriterion', 'ATFriendlyDateCriteria',)
 #    },	
@@ -93,5 +100,4 @@ for crit_field in BIBLIOTOPIC_CRITERIAFIELDS + BIBLIOTOPIC_SORTFIELDS:
     index['criteria'] = crit_field['ctypes']
     indexObj = TopicIndex(index_name, **index)
     BIBLIOTOPIC_INDEXES[index_name] = indexObj
-                                                                                                            
-                                                                                                            
+                                                                                

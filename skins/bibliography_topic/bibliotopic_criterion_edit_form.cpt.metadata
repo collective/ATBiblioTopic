@@ -1,17 +1,17 @@
 [default]
-title = Edit Smart Folder Criteria
+title = Edit Smart Bibliography List Criteria
 
 [validators]
-validators..AddCriterion = validate_add_criterion
-validators..SetSortCriterion = validate_set_sort
-validators..Remove = validate_remove_criterion
+validators..AddCriterion = bibliotopic_validate_add_criterion
+validators..SetSortCriterion = bibliotopic_validate_set_sort
+validators..Remove = bibliotopic_validate_remove_criterion
 validators =
 
 [actions]
-action.failure=traverse_to:string:criterion_edit_form
-action.success=traverse_to:string:criterion_save
-action.success..Cancel=redirect_to:string:criterion_edit_form
-action.success..Save=traverse_to:string:criterion_save
-action.success..Remove=traverse_to:string:criterion_remove
-action.success..AddCriterion=traverse_to:string:criterion_add
-action.success..SetSortCriterion=traverse_to:string:criterion_set_sort
+action.failure=traverse_to:string:bibliotopic_criterion_edit_form
+action.success=traverse_to:string:bibliotopic_criterion_save
+action.success..Cancel=redirect_to:string:bibliotopic_criterion_edit_form
+action.success..Save=traverse_to:string:bibliotopic_criterion_save
+action.success..Remove=traverse_to:string:bibliotopic_criterion_remove
+action.success..AddCriterion=traverse_to:string:bibliotopic_criterion_add
+action.success..SetSortCriterion=traverse_to:string:bibliotopic_criterion_set_sort

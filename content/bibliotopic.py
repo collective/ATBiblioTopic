@@ -28,22 +28,36 @@ from Products.ATContentTypes.criteria import _criterionRegistry
 from Products.ATContentTypes.interfaces import IATTopicSortCriterion
 
 try:
-  from Products.LinguaPlone.public import Schema
+  from Products.LinguaPlone.public import Schema, MetadataSchema
   from Products.LinguaPlone.public import registerType
   from Products.LinguaPlone.public import DisplayList
+  from Products.LinguaPlone.public import StringField, ReferenceField, BooleanField
+  from Products.LinguaPlone.public import SelectionWidget, ReferenceWidget, BooleanWidget
   
 except:
-  from Products.Archetypes.public import Schema
+  from Products.Archetypes.public import Schema, MetadataSchema
   from Products.Archetypes.public import registerType
   from Products.Archetypes.public import DisplayList
+  from Products.Archetypes.public import StringField, ReferenceField, BooleanField
+  from Products.Archetypes.public import SelectionWidget, ReferenceWidget, BooleanWidget
  
+from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import ReferenceBrowserWidget
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 
-from Products.ATBiblioTopic.config import PROJECTNAME
-from Products.ATResearchProject.config import BIBLIOTOPIC_CRITERIAFIELDS
-from Products.ATResearchProject.config import BIBLIOTOPIC_SORTFIELDS
-from Products.ATResearchProject.config import BIBLIOTOPIC_INDEXES
+from Products.Archetypes.Marshall import PrimaryFieldMarshaller
 
+from Products.ATBiblioTopic.config import PROJECTNAME
+from Products.ATBiblioTopic.config import LISTING_VALUES
+from Products.ATBiblioTopic.config import ATBIBLIOTOPIC_BIBFOLDER_REF
+from Products.ATBiblioTopic.config import BIBLIOTOPIC_CRITERIAFIELDS
+from Products.ATBiblioTopic.config import BIBLIOTOPIC_SORTFIELDS
+from Products.ATBiblioTopic.config import BIBLIOTOPIC_INDEXES
+
+# possible types of bibliographic references from module 'CMFBibliographyAT'
+from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types, \
+     FOLDER_TYPES as BIB_FOLDER_TYPES, \
+     ADD_CONTENT_PERMISSION as BIBFOLDER_ADD_CONTENT_PERMISSION
+          
 """
 bibliotopic.py: renders a smart bibliography list based on ATTopic
 """
@@ -56,9 +70,106 @@ def _getBiblioTopicCriteriaIndex(index_name):
     else:
         raise AttributeError ('Index ' + str(index_name) + ' not found')
                                                     
-        	
-BiblioTopicSchema = ATTopicSchema.copy() + Schema((
-))
+relatedItemsField = ReferenceField('relatedItems',
+        relationship = 'relatesTo',
+        multiValued = True,
+        isMetadata = True,
+        languageIndependent = False,
+        index = 'KeywordIndex',
+        write_permission = permissions.ModifyPortalContent,
+        widget = ReferenceBrowserWidget(
+                        allow_search = True,
+                        allow_browse = True,
+                        show_indexes = False,
+                        force_close_on_insert = True,
+                        label = "Related Item(s)",
+                        label_msgid = "label_related_items",
+                        description = "Reference other items on your site here.",
+                        description_msgid = "help_related_items",
+                        i18n_domain = "plone",
+                        visible = {'edit' : 'visible', 'view' : 'invisible' },
+        ),
+)
+
+BiblioTopicSchema = ATTopicSchema.copy() + Schema(
+    (
+        StringField('ListingLayout',
+            multiValued=0,
+            default = "bulletted",
+            vocabulary=LISTING_VALUES,
+            enforce_vocabulary=1,
+            widget=SelectionWidget(label="Listing Layout",
+                        label_msgid="label_bibliotopic_listing_layout",
+                        description_msgid="help_bibliotopic_listing_layout",
+                        description="Listing Format.",
+                        i18n_domain="atbibliotopic",
+                        format="pulldown",
+                        visible={'edit':'visible','view':'invisible'},
+            ),
+        ),
+        StringField('PresentationStyle',
+            multiValued=0,
+            default = 'stl_minimal',
+            vocabulary="vocabCustomStyle",
+            enforce_vocabulary=1,
+            widget=SelectionWidget(label="Bibliographical Style",
+                        label_msgid="label_bibliotopic_presentation",
+                        description_msgid="help_bibliotopic_presentation",
+                        description="Bibliographical Style used for display.",
+                        i18n_domain="atbibliotopic",
+                        format="select",
+                        visible={'edit':'visible','view':'invisible'},
+            ),
+        ),
+        BooleanField('linkToOriginalRef',
+            widget=BooleanWidget(label="Link to Original Reference",
+                        label_msgid="label_bibliotopic_linktooriginalref",
+                        description_msgid="help_bibliotopic_linktooriginalref",
+                        description="Should the bibliographical reference title be a link to the original bibliographical reference?",
+                        i18n_domain="atbibliotopic",
+                        visible={'edit':'visible','view':'invisible'},
+            ),
+        ),
+        ReferenceField('associatedBibFolder',
+            multiValued=0,
+            relationship=ATBIBLIOTOPIC_BIBFOLDER_REF,
+            allowed_types=BIB_FOLDER_TYPES,
+            widget=ReferenceWidget(label="Associated ",
+                        label_msgid="label_associated_bibfolder",
+                        description_msgid="help_associated_bibfolder",
+                        description="Associates a specific BibliographyFolder with this list for the purpose of uploads only.",
+                        i18n_domain="atbibliotopic",
+            ),      
+        ),
+        relatedItemsField,
+    ), marshall=PrimaryFieldMarshaller,
+) + MetadataSchema(
+    (
+        BooleanField('excludeFromNav',
+            required = False,
+            languageIndependent = True,
+            schemata = 'metadata', # moved to 'default' for folders
+            widget = BooleanWidget(
+                        description="If selected, this item will not appear in the navigation tree",
+                        description_msgid = "help_exclude_from_nav",
+                        label = "Exclude from navigation",
+                        label_msgid = "label_exclude_from_nav",
+                        i18n_domain = "plone",
+                        visible={'view' : 'hidden', 'edit' : 'visible'},
+            ),
+        ),
+    )
+)
+BiblioTopicSchema['limitNumber'].languageIndependent = True
+BiblioTopicSchema['itemCount'].languageIndependent = True
+BiblioTopicSchema['customView'].languageIndependent = True
+BiblioTopicSchema['customViewFields'].languageIndependent = True
+BiblioTopicSchema.moveField('acquireCriteria', after='description')
+BiblioTopicSchema.moveField('ListingLayout', after='acquireCriteria')
+BiblioTopicSchema.moveField('PresentationStyle', after='ListingLayout')
+BiblioTopicSchema.moveField('linkToOriginalRef', after='PresentationStyle')
+BiblioTopicSchema.moveField('associatedBibFolder', after='linkToOriginalRef')
+BiblioTopicSchema.moveField('relatedItems', after='customViewFields')
 
 class BibliographyTopic(ATTopic):
     """Content type for dynamic listings of bibliographical references.
@@ -75,13 +186,13 @@ class BibliographyTopic(ATTopic):
     archetype_name  = 'Smart Bibliography List'
     _at_rename_after_create = True
 
-    allowed_content_types = ('ResearchProjectList',)
-    default_view    = 'research_project_list_view'
-    immediate_view  = 'research_project_list_view'
+    allowed_content_types = ('BiblioTopic',)
+    default_view    = 'bibliotopic_view'
+    immediate_view  = 'bibliotopic_view'
     assocMimetypes  = ('application/xhtml+xml','message/rfc822','text/*')
     
-    typeDescription = ("Use this folderish content type to specify a research project search criterion. According to the specified search criterion, a research project list always renders a current list of research projects and subprojects on your site.")
-    typeDescMsgId   = 'description_edit_researchprojectlist'
+    typeDescription = ("Use this folderish content type to specify a bibliography search criterion. According to the specified search criteria, a smart bibliography list always renders a current list of your site's bibliographical reference items.")
+    typeDescMsgId   = 'description_edit_bibliotopic'
     
     actions = (
 	{
@@ -208,9 +319,9 @@ class BibliographyTopic(ATTopic):
     def listMetaDataFields(self, exclude=True):
         """Return a list of fields for the sortable table.
         """
-        indexes = [ crit_field['field'][0] for crit_field in BIBLIOTOPIC_CRITERIAFIELDS + BIBLIOTOPIC_SORTFIELDS ]
+        indexes = [ crit_field['field'][0] for crit_field in BIBLIOTOPIC_CRITERIAFIELDS + BIBLIOTOPIC_SORTFIELDS if crit_field['custom_view'] ]
         table_fields = [ _getBiblioTopicCriteriaIndex(index) for index in  indexes ]
-        return [ (field.index, field.friendlyName or field.index) for field in table_fields ])
+        return [ ('Title', 'Title') ] + [ (field.index, field.friendlyName or field.index) for field in table_fields ]
 
     security.declareProtected(atct_permissions.ChangeTopics, 'listSortFields')
     def listSortFields(self):
@@ -218,4 +329,4 @@ class BibliographyTopic(ATTopic):
         """
 	return [ sort_field['field'] for sort_field in BIBLIOTOPIC_SORTFIELDS if self.validateAddCriterion(sort_field['field'][0], 'ATSortCriterion') ]
 
-registerType(BibliograpyTopic, PROJECTNAME)
+registerType(BibliographyTopic, PROJECTNAME)
