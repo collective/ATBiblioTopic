@@ -134,7 +134,8 @@ BiblioTopicSchema = ATTopicSchema.copy() + Schema(
             multiValued=0,
             relationship=ATBIBLIOTOPIC_BIBFOLDER_REF,
             allowed_types=BIB_FOLDER_TYPES,
-            widget=ReferenceWidget(label="Associated ",
+            widget=ReferenceWidget(label="Associated Bibliography Folder",
+                        checkbox_bound=0,
                         label_msgid="label_associated_bibfolder",
                         description_msgid="help_associated_bibfolder",
                         description="Associates a specific BibliographyFolder with this list for the purpose of uploads only.",
@@ -219,11 +220,25 @@ class BibliographyTopic(ATTopic):
 	 'action'      : 'string:${folder_url}/atct_topic_subtopics',
 	 'permissions' : (atct_permissions.ChangeTopics,)
         },
-	{
-        'id': 'local_roles',
-        'name': 'Sharing',
-        'action': 'string:${object_url}/folder_localrole_form',
-	'permissions': (permissions.ManageProperties,),
+        {
+         'id'          : 'exportBib',
+         'name'        : 'Export Bibliography',
+         'action'      : 'string:${object_url}/bibliotopicDownloadForm',
+         'permissions' : (permissions.View, ),
+         'category'    : 'document_actions',
+        },
+        {
+         'id'           : 'import',
+         'name'         : 'Import',
+         'action'       : 'string:${object_url}/bibliography_importForm',
+         'permissions'  : (BIBFOLDER_ADD_CONTENT_PERMISSION,),
+         'condition'    : 'python:object.getAssociatedBibFolder() is not None',
+        },
+        {
+         'id': 'local_roles',
+         'name': 'Sharing',
+         'action': 'string:${object_url}/folder_localrole_form',
+	 'permissions': (permissions.ManageProperties,),
         },
     )
 
@@ -316,7 +331,7 @@ class BibliographyTopic(ATTopic):
     def listMetaDataFields(self, exclude=True):
         """Return a list of fields for the sortable table.
         """
-        indexes = [ crit_field['field'][0] for crit_field in BIBLIOTOPIC_CRITERIAFIELDS + BIBLIOTOPIC_SORTFIELDS if crit_field['custom_view'] ]
+        indexes = [ crit_field['field'][0] for crit_field in BIBLIOTOPIC_CRITERIAFIELDS + BIBLIOTOPIC_SORTFIELDS if crit_field.has_key('custom_view') and crit_field['custom_view'] ]
         table_fields = [ _getBiblioTopicCriteriaIndex(index) for index in  indexes ]
         return [ ('Title', 'Title') ] + [ (field.index, field.friendlyName or field.index) for field in table_fields ]
 
@@ -326,4 +341,34 @@ class BibliographyTopic(ATTopic):
         """
 	return [ sort_field['field'] for sort_field in BIBLIOTOPIC_SORTFIELDS if self.validateAddCriterion(sort_field['field'][0], 'ATSortCriterion') ]
 
+    security.declareProtected(BIBFOLDER_ADD_CONTENT_PERMISSION, 'processSingleImport')
+    def processSingleImport(self, entry, infer_references=True, **kwargs):
+        """
+        """
+        bf = self.getAssociatedBibFolder()
+        # No need to put in a security check on the 'real' context (i.e. bf)
+        # here because bf.processSingleImport(...) calls self.invokeFactory(...)
+        # which has security built-in.
+
+        result =  bf.processSingleImport(entry, infer_references=infer_references, **kwargs)
+        if len(result) == 2:
+            # skipped references only return report_line and import_status
+            report_line, import_status = result
+            out = (report_line, import_status, None )
+        elif len(result) == 3:
+            # successfully imported references additionally return an object
+            report_line, import_status, ob = result
+            out = (report_line, import_status, ob )
+            
+        # This is just for clarity
+        return out
+                                                                                                            
+    security.declareProtected(BIBFOLDER_ADD_CONTENT_PERMISSION, 'logImportReport')
+    def logImportReport(self, report):
+        """Store the import report.
+        """
+        # Just pass off the import report to the place that actually did the importing.
+        # XXX Should have a security check here though!
+        self.getAssociatedBibFolder().logImportReport(report)
+                                                                                                                                                                                                    
 registerType(BibliographyTopic, PROJECTNAME)

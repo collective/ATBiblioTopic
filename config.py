@@ -54,60 +54,44 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
     {
 	'field'		: ('SearchableText', 'Search all reference item text fields',
 			   'This criterion looks at all searchable text passages in bibliographical reference items.', '', ),
-        'catalog'       : False,
-        'custom_view'   : False,                   
-        'index_type'    : text_index_type,
 	'ctypes'	: ('ATSimpleStringCriterion', ),
     },	
     {
-	'field'		: ('Authors','Authors','Author of referenced bibliographical item',''),
-        'catalog'       : False,
+	'field'		: ('SearchableAuthors','Authors','Author of referenced bibliographical item',''),
+        'catalog'       : True,
         'custom_view'   : True,                   
-        'index_type'    : { 'type': 'FieldIndex', },
+        'index_type'    : text_index_type,
 	'ctypes'	: ( 'ATSimpleStringCriterion',),
     },	
     {
 	'field'		: ( 'publication_date', 'Publication Date', 'Publication date of the referenced bibliographical item',),
-        'catalog'       : False,
         'custom_view'   : True,                   
-        'index_type'    : { 'type': 'DateIndex', },
 	'ctypes'	: ( 'ATDateRangeCriterion', 'ATFriendlyDateCriteria',),
     },	
     {
 	'field'		: ('Title','Title', 'Title of the referenced bibliography item',''),
-        'catalog'       : False,
         'custom_view'   : True,                   
-        'index_type'    : text_index_type,
 	'ctypes'	: ('ATSimpleStringCriterion',),
     },	
 ]
 BIBLIOTOPIC_SORTFIELDS = [
     {
 	'field'		: ( 'publication_date', 'Publication Date', 'Publication year of the referenced bibliographical item',),
-        'catalog'       : False,
-        'custom_view'   : False,                   
-        'index_type'    : { 'type': 'DateIndex', },
 	'ctypes'	: ('ATSortCriterion',),
     },	
     {
 	'field'		: ('Authors','Authors', 'Author(s) of referenced bibliographical item',),
-        'catalog'       : False,
-        'custom_view'   : False,                   
-        'index_type'    : { 'type': 'FieldIndex', },
 	'ctypes'	: ('ATSortCriterion', ),
     },	
     {
 	'field'		: ('sortable_title','Title', 'Title of the referenced bibliography item',''),
-        'catalog'       : False,
-        'custom_view'   : False,
-        'index_type'    : { 'type': 'FieldIndex', },
 	'ctypes'	: ('ATSortCriterion',),
     },	
 ]
 
 # generated from the BIBLIOTOPIC_CRITERIAFIELDS
-CATALOG_INDEXES = [ dict([('name',criterion['field'][0])] + [ (key, criterion['index_type'][key]) for key in criterion['index_type'].keys() ]) for criterion in (BIBLIOTOPIC_CRITERIAFIELDS + BIBLIOTOPIC_SORTFIELDS) if criterion['catalog'] ]
-CATALOG_METADATA = [ criterion['field'][0] for criterion in BIBLIOTOPIC_SORTFIELDS if criterion['catalog'] ]
+CATALOG_INDEXES = [ dict([('name',criterion['field'][0])] + [ (key, criterion['index_type'][key]) for key in criterion['index_type'].keys() ]) for criterion in (BIBLIOTOPIC_CRITERIAFIELDS + BIBLIOTOPIC_SORTFIELDS) if criterion.has_key('catalog') and criterion['catalog'] ]
+CATALOG_METADATA = [ criterion['field'][0] for criterion in BIBLIOTOPIC_SORTFIELDS if criterion.has_key('catalog') and criterion['catalog'] ]
 
 # initializing criteria indexes for BiblioTopics
 BIBLIOTOPIC_INDEXES = {}
