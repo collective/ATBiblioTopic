@@ -9,7 +9,8 @@ from Products.Archetypes.Extensions.utils import installTypes, install_subskin
 
 from Products.CMFCore.utils import getToolByName
 
-from Products.CMFPlone.CatalogTool import _eioRegistry
+from Products.CMFPlone.CatalogTool import _eioRegistry as indexableAttribute
+unregisterIndexableAttribute = indexableAttribute.unregister
 
 from Products.ATBiblioTopic.config import PROJECTNAME
 from Products.ATBiblioTopic.config import GLOBALS
@@ -85,7 +86,7 @@ def removeIndexesFromCatalogTool(self, out):
 		
 def unregisterIndexableAtrributes(self, out):
     # unregister SearchableAuthors as callable
-    #unregisterIndexableAttribute('SearchableAuthors')	
+    unregisterIndexableAttribute('SearchableAuthors')	
         
 def removeMetadataFromCatalogTool(self, out):
     ct = getToolByName(self, 'portal_catalog')

@@ -53,6 +53,11 @@ except ImportError:
     zcti_extra.doc_attr   = None
     text_index_type = { 'type': 'ZCTextIndex', 'extra': zcti_extra, }
     
+try: 
+    from Products.CMFBibliographyAT_extended_schemata.config import BIBLIOTOPIC_EXTENDEDSCHEMATA_CRITERIAFIELDS
+except ImportError:
+    BIBLIOTOPIC_EXTENDEDSCHEMATA_CRITERIAFIELDS = []
+
 BIBLIOTOPIC_CRITERIAFIELDS = [
     {
 	'field'		: ('SearchableText', 'Search all reference item text fields',
@@ -76,7 +81,8 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
         'custom_view'   : True,                   
 	'ctypes'	: ('ATSimpleStringCriterion',),
     },	
-]
+] + BIBLIOTOPIC_EXTENDEDSCHEMATA_CRITERIAFIELDS
+print BIBLIOTOPIC_CRITERIAFIELDS
 BIBLIOTOPIC_SORTFIELDS = [
     {
 	'field'		: ( 'publication_year', 'Publication Year', 'Publication year of the referenced bibliographical item',),
