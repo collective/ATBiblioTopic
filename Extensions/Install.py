@@ -9,6 +9,8 @@ from Products.Archetypes.Extensions.utils import installTypes, install_subskin
 
 from Products.CMFCore.utils import getToolByName
 
+from Products.CMFPlone.CatalogTool import _eioRegistry
+
 from Products.ATBiblioTopic.config import PROJECTNAME
 from Products.ATBiblioTopic.config import GLOBALS
 from Products.ATBiblioTopic.config import CATALOG_INDEXES
@@ -71,10 +73,9 @@ def install(self):
     return out.getvalue()
 
 def removeIndexesFromCatalogTool(self, out):
-    ctool = getToolByName(self, 'portal_catalog')
-    if ctool:
+    ct = getToolByName(self, 'portal_catalog')
+    if ct:
         # add indexes and metadatas to the portal catalog
-        ct = getToolByName(self, 'portal_catalog')
         for idx in CATALOG_INDEXES:
             if idx['name'] in ct.indexes():
 	        ct.delIndex(idx['name'])
@@ -82,11 +83,14 @@ def removeIndexesFromCatalogTool(self, out):
 	    else:
 		out.write("Index '%s' (%s) not found in the catalog, nothing changed.\n" % (idx['name'], idx['type']))
 		
+def unregisterIndexableAtrributes(self, out):
+    # unregister SearchableAuthors as callable
+    #unregisterIndexableAttribute('SearchableAuthors')	
+        
 def removeMetadataFromCatalogTool(self, out):
-    ctool = getToolByName(self, 'portal_catalog')
-    if ctool:
+    ct = getToolByName(self, 'portal_catalog')
+    if ct:
         # add indexes and metadatas to the portal catalog
-        ct = getToolByName(self, 'portal_catalog')
         for entry in CATALOG_METADATA:
 	    if entry in ct.schema():
 	        ct.delColumn(entry)
@@ -99,6 +103,7 @@ def uninstall(self):
     out = StringIO()
     removeIndexesFromCatalogTool(self, out)
     removeMetadataFromCatalogTool(self, out)
+    unregisterIndexableAtrributes(self, out)
     # all the rest of cleaning we leave to the quickinstaller
     print >> out, "Uninstalled %s." % PROJECTNAME
     return out.getvalue()

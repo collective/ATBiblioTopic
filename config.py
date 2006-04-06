@@ -32,6 +32,9 @@ LISTING_VALUES = DisplayList((
     ('table', 'Table listing'),
     ))
 
+# monkey patch section
+BIBLIOGRAPHY_EXTENDED_SCHEMATA = True
+
 # do not touch this variable structure!!! unless you know what you are doing!!! actually do not touch anything in this file
 try:
     import Products.TextIndexNG2

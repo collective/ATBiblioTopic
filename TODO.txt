@@ -2,7 +2,6 @@ TODO ATBiblioTopic:
 
     o batch mode for bibliotopic_view.pt
     o add more indexes to the catalog
-    o sortable_authors (FieldIndex) vs. Authors (TextIndex et al.)
     o bibliotopic_view.pt needs more layouting (styles)!!!
     o substructure smart biblist by reference types (boolean switch in schema)
     o substructure smart biblist by publication date (year)

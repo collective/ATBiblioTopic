@@ -31,7 +31,7 @@
                             list_layout here/getListingLayout|nothing;
                             t_link here/getLinkToOriginalRef;
                             bs_tool here/portal_bibliostyles;
-                            formatted_list python:bs_tool.formatList(refs, style, title_link=t_link, brains_object=True)"
+                            formatted_list python:bs_tool.formatList(refs, style, title_link=t_link, brains_object=True, sort=False)"
                     tal:condition="refs">
 
         <tal:bibliolist condition="formatted_list">

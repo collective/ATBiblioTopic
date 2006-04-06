@@ -37,3 +37,4 @@ def initialize(context):
         fti                = ftis,
         ).initialize(context)
 
+from monkey import *

@@ -177,7 +177,7 @@ def SearchableAuthors(obj, portal, **kwargs):
     """return all authors of bibliography references in a single string
     """
     if (obj.portal_type in REFERENCE_TYPES) and obj.getAuthors():
-        return obj.getAuthors()
+        return obj.getAuthors().lower()
     return ''    
 
 registerIndexableAttribute('SearchableAuthors', SearchableAuthors)
