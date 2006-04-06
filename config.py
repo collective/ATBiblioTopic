@@ -76,7 +76,7 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
 ]
 BIBLIOTOPIC_SORTFIELDS = [
     {
-	'field'		: ( 'publication_date', 'Publication Date', 'Publication year of the referenced bibliographical item',),
+	'field'		: ( 'publication_year', 'Publication Year', 'Publication year of the referenced bibliographical item',),
 	'ctypes'	: ('ATSortCriterion',),
     },	
     {

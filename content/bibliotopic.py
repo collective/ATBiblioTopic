@@ -19,6 +19,7 @@ from Products.CMFCore import permissions
 from Products.ATContentTypes import permission as atct_permissions
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.CatalogTool import registerIndexableAttribute    
 
 from AccessControl import ClassSecurityInfo
 from AccessControl import Unauthorized
@@ -171,6 +172,16 @@ BiblioTopicSchema.moveField('PresentationStyle', after='ListingLayout')
 BiblioTopicSchema.moveField('linkToOriginalRef', after='PresentationStyle')
 BiblioTopicSchema.moveField('associatedBibFolder', after='linkToOriginalRef')
 BiblioTopicSchema.moveField('relatedItems', after='customViewFields')
+
+def SearchableAuthors(obj, portal, **kwargs):
+    """return all authors of bibliography references in a single string
+    """
+    if (obj.portal_type in REFERENCE_TYPES) and obj.getAuthors():
+        return obj.getAuthors()
+    return ''    
+
+registerIndexableAttribute('SearchableAuthors', SearchableAuthors)
+
 
 class BibliographyTopic(ATTopic):
     """Content type for dynamic listings of bibliographical references.
