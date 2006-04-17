@@ -11,8 +11,7 @@ indexId=request.get('field')
 criterion_type=request.get('criterion_type')
 supported = context.validateAddCriterion(indexId, criterion_type)
 
-atct_tool = context.portal_atct
-index_obj = atct_tool.getIndex(indexId)
+index_obj = context.getBiblioTopicCriteriaIndex(indexId)
 allowed_criteria = index_obj.criteria
 
 if not supported or criterion_type not in allowed_criteria:

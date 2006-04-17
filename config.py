@@ -112,4 +112,4 @@ for crit_field in BIBLIOTOPIC_CRITERIAFIELDS + BIBLIOTOPIC_SORTFIELDS:
     index['criteria'] = crit_field['ctypes']
     indexObj = TopicIndex(index_name, **index)
     BIBLIOTOPIC_INDEXES[index_name] = indexObj
-                                                                                
+                                    

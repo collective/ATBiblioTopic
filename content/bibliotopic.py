@@ -30,14 +30,14 @@ from Products.ATContentTypes.interfaces import IATTopicSortCriterion
 
 try:
   from Products.LinguaPlone.public import Schema, MetadataSchema
-  from Products.LinguaPlone.public import registerType
+  from Products.LinguaPlone.public import registerType, listTypes
   from Products.LinguaPlone.public import DisplayList
   from Products.LinguaPlone.public import StringField, ReferenceField, BooleanField
   from Products.LinguaPlone.public import SelectionWidget, ReferenceWidget, BooleanWidget
   
 except:
   from Products.Archetypes.public import Schema, MetadataSchema
-  from Products.Archetypes.public import registerType
+  from Products.Archetypes.public import registerType, listTypes
   from Products.Archetypes.public import DisplayList
   from Products.Archetypes.public import StringField, ReferenceField, BooleanField
   from Products.Archetypes.public import SelectionWidget, ReferenceWidget, BooleanWidget
@@ -57,20 +57,16 @@ from Products.ATBiblioTopic.config import BIBLIOTOPIC_INDEXES
 # possible types of bibliographic references from module 'CMFBibliographyAT'
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES, \
      FOLDER_TYPES as BIB_FOLDER_TYPES, \
-     ADD_CONTENT_PERMISSION as BIBFOLDER_ADD_CONTENT_PERMISSION
+     ADD_CONTENT_PERMISSION as BIBFOLDER_ADD_CONTENT_PERMISSION, \
+     PROJECTNAME as BIBLIOGRAPHY_PROJECTNAME
+     
+from Products.CMFBibliographyAT.content.folder import BibliographyFolder, LargeBibliographyFolder
           
 """
 bibliotopic.py: renders a smart bibliography list based on ATTopic
 """
 
 
-def _getBiblioTopicCriteriaIndex(index_name):
-
-    if BIBLIOTOPIC_INDEXES.has_key(index_name):
-        return BIBLIOTOPIC_INDEXES[index_name]
-    else:
-        raise AttributeError ('Index ' + str(index_name) + ' not found')
-                                                    
 relatedItemsField = ReferenceField('relatedItems',
         relationship = 'relatesTo',
         multiValued = True,
@@ -92,7 +88,7 @@ relatedItemsField = ReferenceField('relatedItems',
         ),
 )
 
-BiblioTopicSchema = ATTopicSchema.copy() + Schema(
+BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
     (
         StringField('ListingLayout',
             multiValued=0,
@@ -131,6 +127,15 @@ BiblioTopicSchema = ATTopicSchema.copy() + Schema(
                         visible={'edit':'visible','view':'invisible'},
             ),
         ),
+        BooleanField('filterReferencesByWorkflowState',
+            widget=BooleanWidget(label="Filter References By Workflow State",
+                        label_msgid="label_bibliotopic_filterreferencesbyworkflowstate",
+                        description_msgid="help_bibliotopic_filterreferencesbyworkflowstate",
+                        description="Show bibliographical reference items only if their workflow states allows it.",
+                        i18n_domain="atbibliotopic",
+                        visible={'edit':'visible','view':'invisible'},
+            ),
+        ),
         ReferenceField('associatedBibFolder',
             multiValued=0,
             relationship=ATBIBLIOTOPIC_BIBFOLDER_REF,
@@ -162,16 +167,18 @@ BiblioTopicSchema = ATTopicSchema.copy() + Schema(
         ),
     )
 )
-BiblioTopicSchema['limitNumber'].languageIndependent = True
-BiblioTopicSchema['itemCount'].languageIndependent = True
-BiblioTopicSchema['customView'].languageIndependent = True
-BiblioTopicSchema['customViewFields'].languageIndependent = True
-BiblioTopicSchema.moveField('acquireCriteria', after='description')
-BiblioTopicSchema.moveField('ListingLayout', after='acquireCriteria')
-BiblioTopicSchema.moveField('PresentationStyle', after='ListingLayout')
-BiblioTopicSchema.moveField('linkToOriginalRef', after='PresentationStyle')
-BiblioTopicSchema.moveField('associatedBibFolder', after='linkToOriginalRef')
-BiblioTopicSchema.moveField('relatedItems', after='customViewFields')
+BibliographyTopicSchema['limitNumber'].languageIndependent = True
+BibliographyTopicSchema['itemCount'].languageIndependent = True
+BibliographyTopicSchema['customView'].languageIndependent = True
+BibliographyTopicSchema['customViewFields'].languageIndependent = True
+BibliographyTopicSchema.moveField('acquireCriteria', after='description')
+BibliographyTopicSchema.moveField('ListingLayout', after='acquireCriteria')
+BibliographyTopicSchema.moveField('PresentationStyle', after='ListingLayout')
+BibliographyTopicSchema.moveField('linkToOriginalRef', after='PresentationStyle')
+BibliographyTopicSchema.moveField('filterReferencesByWorkflowState', after='linkToOriginalRef')
+BibliographyTopicSchema.moveField('associatedBibFolder', after='filterReferencesByWorkflowState')
+BibliographyTopicSchema.moveField('relatedItems', after='customViewFields')
+BibliographyTopicSchema.moveField('excludeFromNav', before='allowDiscussion')
 
 def SearchableAuthors(obj, portal, **kwargs):
     """return all authors of bibliography references in a single string
@@ -190,11 +197,11 @@ class BibliographyTopic(ATTopic):
     __implements__  = (ATTopic.__implements__,
 		      )
 
-    schema 	    = BiblioTopicSchema
+    schema 	    = BibliographyTopicSchema
 
     content_icon    = 'bibliotopic_icon.gif'
-    meta_type       = 'ATBiblioTopic'
-    portal_type     = 'BiblioTopic'
+    meta_type       = 'ATBibliographyTopic'
+    portal_type     = 'BibliographyTopic'
     archetype_name  = 'Smart Bibliography List'
     _at_rename_after_create = True
 
@@ -237,6 +244,13 @@ class BibliographyTopic(ATTopic):
          'action'      : 'string:${object_url}/bibliotopicDownloadForm',
          'permissions' : (permissions.View, ),
          'category'    : 'document_actions',
+        },
+        {
+         'id'           : 'addBibReferences',
+         'name'         : 'Add Reference',
+         'action'       : 'python: "%s/folder_factories" % object.getAssociatedBibFolderUrl()',
+         'permissions'  : (BIBFOLDER_ADD_CONTENT_PERMISSION,),
+         'condition'    : 'python:object.getAssociatedBibFolder() is not None',
         },
         {
          'id'           : 'import',
@@ -310,11 +324,27 @@ class BibliographyTopic(ATTopic):
                 query[key] = value
 
         query['portal_type'] = tuple(REFERENCE_TYPES)
+        
+        if self.getFilterReferencesByWorkflowState():
+            navtool = getToolByName(self, 'portal_properties').navtree_properties
+            mtool = getToolByName(self, 'portal_membership')
+            if navtool.getProperty('enable_wf_state_filtering', False):
+                #if mtool.isAnonymousUser():
+                query['review_state'] = navtool.wf_states_to_show
 
-        print query
+        #print query
 
         return query or None
 
+    security.declareProtected(permissions.View, 'getBiblioTopicCriteriaIndex')
+    def getBiblioTopicCriteriaIndex(self, index_name):
+
+        if BIBLIOTOPIC_INDEXES.has_key(index_name):
+            index = BIBLIOTOPIC_INDEXES[index_name]
+            return BIBLIOTOPIC_INDEXES[index_name]
+        else:
+            raise AttributeError ('Index ' + str(index_name) + ' not found')
+                                                    
     security.declareProtected(permissions.View, 'allowedCriteriaForField')
     def allowedCriteriaForField(self, field, display_list=False):
         """ Return all valid criteria for a given field.  Optionally include
@@ -339,11 +369,11 @@ class BibliographyTopic(ATTopic):
         return addable_fields
 
     security.declareProtected(permissions.View, 'listMetaDataFields')
-    def listMetaDataFields(self, exclude=True):
+    def listMetaDataFields(self):
         """Return a list of fields for the sortable table.
         """
         indexes = [ crit_field['field'][0] for crit_field in BIBLIOTOPIC_CRITERIAFIELDS + BIBLIOTOPIC_SORTFIELDS if crit_field.has_key('custom_view') and crit_field['custom_view'] ]
-        table_fields = [ _getBiblioTopicCriteriaIndex(index) for index in  indexes ]
+        table_fields = [ self.getBiblioTopicCriteriaIndex(index) for index in indexes ]
         return [ ('Title', 'Title') ] + [ (field.index, field.friendlyName or field.index) for field in table_fields ]
 
     security.declareProtected(atct_permissions.ChangeTopics, 'listSortFields')
@@ -351,6 +381,25 @@ class BibliographyTopic(ATTopic):
         """Return a list of available sort fields.
         """
 	return [ sort_field['field'] for sort_field in BIBLIOTOPIC_SORTFIELDS if self.validateAddCriterion(sort_field['field'][0], 'ATSortCriterion') ]
+
+    security.declareProtected(permissions.View, 'listBibReferenceTypes')
+    def listBibReferenceTypes(self):
+        """Return a DisplayList containing all available bibref items
+        """
+        return DisplayList(tuple([(type['klass'].portal_type, type['klass'].archetype_name) for type in listTypes(BIBLIOGRAPHY_PROJECTNAME) if type['klass'].portal_type in REFERENCE_TYPES ]))
+
+    security.declareProtected(permissions.View, 'isAllowedToAddBibReferences')
+    def isAllowedToAddBibReferences(self):
+        """checks if the current user is allowed to add content to the associated Bibfolder
+        """
+        mtool = getToolByName(self, 'portal_membership')
+        return self.getAssociatedBibFolder() and mtool.checkPermission('ModifyPortalContent', self.getAssociatedBibFolder()) and True or False
+
+    security.declareProtected(permissions.View, 'getAssociatedBibFolderUrl')
+    def getAssociatedBibFolderUrl(self):
+        """returns the URL of the associated bibfolder
+        """
+        return self.getAssociatedBibFolder() and self.getAssociatedBibFolder().absolute_url() or False
 
     security.declareProtected(BIBFOLDER_ADD_CONTENT_PERMISSION, 'processSingleImport')
     def processSingleImport(self, entry, infer_references=True, **kwargs):

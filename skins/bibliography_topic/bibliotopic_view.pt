@@ -24,7 +24,7 @@
             description
         </div>
 
-        <metal:listing define-macro="biliolist-listing"
+        <metal:listing define-macro="biliotopic-listing"
                     tal:define="search_result python:here.queryCatalog();
                             refs search_result;
                             style here/getPresentationStyle;
@@ -32,9 +32,9 @@
                             t_link here/getLinkToOriginalRef;
                             bs_tool here/portal_bibliostyles;
                             formatted_list python:bs_tool.formatList(refs, style, title_link=t_link, brains_object=True, sort=False)"
-                    tal:condition="refs">
+                    >
 
-        <tal:bibliolist condition="formatted_list">
+        <tal:bibliotopic condition="formatted_list">
           <ul tal:condition="python:list_layout=='bulleted'">
             <tal:block repeat="ref formatted_list">
             <li tal:content="structure ref" />
@@ -69,17 +69,36 @@
               </tal:block>
             </tbody>
           </table>
-        </tal:bibliolist>
+        </tal:bibliotopic>
 
+        <p class="discreet"
+           tal:condition="python: not mtool.checkPermission('ModifyPortalContent', here) or (here.listCriteria() and not formatted_list)"
+           i18n:translate="bibliotopic_nothing_listed">
+            No bibliographical references have been found for this context.
+        </p>
 
-        <div tal:condition="not:formatted_list"
-             i18n:translate="bibliolist_nothing_listed">
-             No bibliographical reference listed..
-        </div>
+        <p class="discreet"
+            tal:condition="python: not here.listCriteria() and mtool.checkPermission('ModifyPortalContent', here)"
+            i18n:domain="atcontenttypes"
+            i18n:translate="description_no_criteria_in_topic">
+                There are currently no criteria on which to search.
+                Please add them using the 'criteria' tab.
+        </p>
 
       </metal:listing>
+      <metal:body define-macro="folderlisting_macro">
+            <tal:subtopics condition="here/hasSubtopics"
+                           define="folderContents here/getFolderContents">
+                <h2 i18n:domain="atresearchproject"
+                    i18n:translate="sub_rplists_heading">
+                    Contained Research Project Lists:
+                </h2>
+                <metal:list metal:use-macro="here/base/macros/folderlisting"/>
+            </tal:subtopics>
+      </metal:body>
 
     </tal:main-macro>
+    
 </metal:main>
 
 </body>

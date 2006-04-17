@@ -83,12 +83,12 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody i18n:domain="atbibliotopic">
                 <tal:criteria repeat="criterion criteria">
                     <tr tal:define="oddrow repeat/criterion/odd;"
                         tal:attributes="class python:test(oddrow, 'even', 'odd')"
                         style="vertical-align: top;">
-                      <td metal:use-macro="here/atct_macros/macros/criterion_edit" />
+                      <td metal:use-macro="here/bibliotopic_macros/macros/criterion_edit" />
                     </tr>
                 </tal:criteria>
             </tbody>
@@ -155,7 +155,7 @@
                         onchange=""
                         tal:attributes="tabindex tabindex/next;
                                         onchange string:javascript:showHelp(this.options[this.selectedIndex], 'fieldHelp');"
-                        i18n:domain="plone">
+                        i18n:domain="atbibliotopic">
                 <tal:options tal:repeat="field fields">
                     <option value=""
                             tal:define="explanation python:field[2]"
