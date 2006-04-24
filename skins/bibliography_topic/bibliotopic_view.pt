@@ -72,7 +72,7 @@
         </tal:bibliotopic>
 
         <p class="discreet"
-           tal:condition="python: not mtool.checkPermission('ModifyPortalContent', here) or (here.listCriteria() and not formatted_list)"
+           tal:condition="python: not formatted_list and (not mtool.checkPermission('ModifyPortalContent', here) or here.listCriteria())"
            i18n:translate="bibliotopic_nothing_listed">
             No bibliographical references have been found for this context.
         </p>
@@ -96,6 +96,10 @@
                 <metal:list metal:use-macro="here/base/macros/folderlisting"/>
             </tal:subtopics>
       </metal:body>
+
+    <div metal:use-macro="here/document_relateditems/macros/relatedItems">
+	show related items if they exist
+    </div>
 
     </tal:main-macro>
     

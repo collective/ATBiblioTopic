@@ -86,7 +86,10 @@ def removeIndexesFromCatalogTool(self, out):
 		
 def unregisterIndexableAtrributes(self, out):
     # unregister SearchableAuthors as callable
-    unregisterIndexableAttribute('SearchableAuthors')	
+    try:
+	unregisterIndexableAttribute('SearchableAuthors')	
+    except:
+	pass
         
 def removeMetadataFromCatalogTool(self, out):
     ct = getToolByName(self, 'portal_catalog')

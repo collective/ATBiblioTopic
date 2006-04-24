@@ -42,7 +42,7 @@ try:
     ting2_extra = record()
     ting2_extra.indexed_fields   = ''
     ting2_extra.default_encoding = 'utf-8'
-    ting2_extra.use_converters   = 1
+    ting2_extra.use_converters   = 0
     text_index_type = { 'type': 'TextIndexNG2', 'extra': ting2_extra, }
     
 except ImportError:
@@ -65,7 +65,7 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
 	'ctypes'	: ('ATSimpleStringCriterion', ),
     },	
     {
-	'field'		: ('SearchableAuthors','Authors','Author of referenced bibliographical item',''),
+	'field'		: ('getAuthors','Authors','Author of referenced bibliographical item',''),
         'catalog'       : True,
         'custom_view'   : True,                   
         'index_type'    : text_index_type,
