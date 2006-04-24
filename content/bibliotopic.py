@@ -130,6 +130,17 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
                         visible={'edit':'visible','view':'invisible'},
             ),
         ),
+        BooleanField('linkToOriginalRefOnlyIfOwner',
+	    default = False,
+    	    languageIndependent = True,
+            widget=BooleanWidget(label="Only Show Link to Original Reference if Owner",
+                        label_msgid="label_bibliotopic_linktooriginalrefonlyifowner",
+                        description_msgid="help_bibliotopic_linktooriginalrefonlyifowner",
+                        description="If linking to original references is enabled, this switch will narrow the number of linked references down to those items the authenticated user is owner of.",
+                        i18n_domain="atbibliotopic",
+                        visible={'edit':'visible','view':'invisible'},
+            ),
+        ),
         BooleanField('filterReferencesByWorkflowState',
     	    languageIndependent = True,
             widget=BooleanWidget(label="Filter References By Workflow State",
@@ -180,7 +191,8 @@ BibliographyTopicSchema.moveField('acquireCriteria', after='description')
 BibliographyTopicSchema.moveField('ListingLayout', after='acquireCriteria')
 BibliographyTopicSchema.moveField('PresentationStyle', after='ListingLayout')
 BibliographyTopicSchema.moveField('linkToOriginalRef', after='PresentationStyle')
-BibliographyTopicSchema.moveField('filterReferencesByWorkflowState', after='linkToOriginalRef')
+BibliographyTopicSchema.moveField('linkToOriginalRefOnlyIfOwner', after='linkToOriginalRef')
+BibliographyTopicSchema.moveField('filterReferencesByWorkflowState', after='linkToOriginalRefOnlyIfOwner')
 BibliographyTopicSchema.moveField('associatedBibFolder', after='filterReferencesByWorkflowState')
 BibliographyTopicSchema.moveField('relatedItems', after='customViewFields')
 BibliographyTopicSchema.moveField('excludeFromNav', before='allowDiscussion')
