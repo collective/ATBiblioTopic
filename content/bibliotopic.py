@@ -48,7 +48,7 @@ from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.Archetypes.Marshall import PrimaryFieldMarshaller
 
 from Products.ATBiblioTopic.config import PROJECTNAME
-from Products.ATBiblioTopic.config import LISTING_VALUES
+from Products.ATBiblioTopic.config import LISTING_VALUES, STRUCTURAL_VALUES
 from Products.ATBiblioTopic.config import ATBIBLIOTOPIC_BIBFOLDER_REF
 from Products.ATBiblioTopic.config import BIBLIOTOPIC_CRITERIAFIELDS
 from Products.ATBiblioTopic.config import BIBLIOTOPIC_SORTFIELDS
@@ -97,9 +97,37 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
     	    languageIndependent = True,
             enforce_vocabulary=1,
             widget=SelectionWidget(label="Listing Layout",
-                        label_msgid="label_bibliotopic_listing_layout",
-                        description_msgid="help_bibliotopic_listing_layout",
+                        label_msgid="label_bibliotopic_listinglayout",
+                        description_msgid="help_bibliotopic_listinglayout",
                         description="Listing Format.",
+                        i18n_domain="atbibliotopic",
+                        format="pulldown",
+                        visible={'edit':'visible','view':'invisible'},
+            ),
+        ),
+        StringField('StructuralLayout',
+            multiValued=0,
+            default = 'none',
+            vocabulary=STRUCTURAL_VALUES,
+    	    languageIndependent = True,
+            enforce_vocabulary=1,
+            widget=SelectionWidget(label="Structural Layout",
+                        label_msgid="label_bibliotopic_structurallayout",
+                        description_msgid="help_bibliotopic_structurallayout",
+                        description="Choose a field that shall be used to substructure your smart bibliography list.",
+                        i18n_domain="atbibliotopic",
+                        format="pulldown",
+                        visible={'edit':'visible','view':'invisible'},
+            ),
+        ),
+        BooleanField('StructuralLayoutReverseOrder',
+            default = False,
+    	    languageIndependent = True,
+            widget=BooleanWidget(
+			label="Reverse Sort Order of Structural Layout",
+                        label_msgid="label_bibliotopic_structurallayoutreverseorder",
+                        description_msgid="help_bibliotopic_structurallayoutreversesortorder",
+                        description="Click here if you want to substructure this smart bibliography list in reverse order.",
                         i18n_domain="atbibliotopic",
                         format="pulldown",
                         visible={'edit':'visible','view':'invisible'},
@@ -146,7 +174,7 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
             widget=BooleanWidget(label="Filter References By Workflow State",
                         label_msgid="label_bibliotopic_filterreferencesbyworkflowstate",
                         description_msgid="help_bibliotopic_filterreferencesbyworkflowstate",
-                        description="Show bibliographical reference items only if their workflow states allows it.",
+                        description="Show bibliographical reference items only if their workflow state allows it.",
                         i18n_domain="atbibliotopic",
                         visible={'edit':'visible','view':'invisible'},
             ),
@@ -189,7 +217,9 @@ BibliographyTopicSchema['customView'].languageIndependent = True
 BibliographyTopicSchema['customViewFields'].languageIndependent = True
 BibliographyTopicSchema.moveField('acquireCriteria', after='description')
 BibliographyTopicSchema.moveField('ListingLayout', after='acquireCriteria')
-BibliographyTopicSchema.moveField('PresentationStyle', after='ListingLayout')
+BibliographyTopicSchema.moveField('StructuralLayout', after='ListingLayout')
+BibliographyTopicSchema.moveField('StructuralLayoutReverseOrder', after='StructuralLayout')
+BibliographyTopicSchema.moveField('PresentationStyle', after='StructuralLayoutReverseOrder')
 BibliographyTopicSchema.moveField('linkToOriginalRef', after='PresentationStyle')
 BibliographyTopicSchema.moveField('linkToOriginalRefOnlyIfOwner', after='linkToOriginalRef')
 BibliographyTopicSchema.moveField('filterReferencesByWorkflowState', after='linkToOriginalRefOnlyIfOwner')

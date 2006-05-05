@@ -25,11 +25,24 @@ ATBT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 ATBIBLIOTOPIC_BIBFOLDER_REF = 'ATBiblioTopic_associated_bibfolder'
 REFERENCE_ALLOWED_TYPES = [tn.replace(' Reference', 'Reference') for tn in REFERENCE_TYPES]
+
 LISTING_VALUES = DisplayList((
     ('bulleted', 'Bulleted list'),
     ('ordered', 'Ordered list'),
     ('lines', 'Simple lines list'),
     ('table', 'Table listing'),
+    ))
+
+try: 
+    from Products.CMFBibliographyAT_extended_schemata.config import BIBLIOTOPIC_EXTENDEDSCHEMATA_STRUCTURAL_LAYOUT
+except ImportError:
+    BIBLIOTOPIC_EXTENDEDSCHEMATA_STRUCTURAL_LAYOUT = []
+STRUCTURAL_VALUES = DisplayList(tuple([
+    ('none','No Substructuring'),
+    ('publication_year', 'Publication Year'),
+    ('Authors', 'Authors\' Names'),
+    ]
+    + BIBLIOTOPIC_EXTENDEDSCHEMATA_STRUCTURAL_LAYOUT
     ))
 
 # monkey patch section
@@ -82,7 +95,6 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
 	'ctypes'	: ('ATSimpleStringCriterion',),
     },	
 ] + BIBLIOTOPIC_EXTENDEDSCHEMATA_CRITERIAFIELDS
-print BIBLIOTOPIC_CRITERIAFIELDS
 BIBLIOTOPIC_SORTFIELDS = [
     {
 	'field'		: ( 'publication_year', 'Publication Year', 'Publication year of the referenced bibliographical item',),
