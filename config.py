@@ -94,6 +94,11 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
         'custom_view'   : True,                   
 	'ctypes'	: ('ATSimpleStringCriterion',),
     },	
+    {
+	'field'		: ('path','Website Path', 'Select specific subtrees of your site to be searched for bibliographical items',''),
+        'custom_view'   : True,                   
+	'ctypes'	: ('ATPathCriterion',),
+    },	
 ] + BIBLIOTOPIC_EXTENDEDSCHEMATA_CRITERIAFIELDS
 BIBLIOTOPIC_SORTFIELDS = [
     {
