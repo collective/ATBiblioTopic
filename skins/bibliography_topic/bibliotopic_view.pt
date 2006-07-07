@@ -25,15 +25,22 @@
         </div>
 
         <metal:listing define-macro="biliotopic-listing"
-                    tal:define="search_result python:here.queryCatalog();
-                            refs search_result;
+                    tal:define="
+			    structural_layout here/getStructuralLayout;
+			    structural_layout_reverse here/getStructuralLayoutReverseOrder;
+			    search_result python:here.queryCatalog(structural_layout=structural_layout, structural_layout_reverse=structural_layout_reverse);
+                            structural_refs python:here.getStructuralLayoutRefs(search_result, structural_layout=structural_layout, structural_layout_reverse=structural_layout_reverse);
                             style here/getPresentationStyle;
                             list_layout here/getListingLayout|nothing;
                             t_link here/getLinkToOriginalRef;
                             t_link_owner here/getLinkToOriginalRefOnlyIfOwner;
-                            bs_tool here/portal_bibliostyles;
-                            formatted_list python:bs_tool.formatList(refs, style, title_link=t_link, title_link_only_if_owner=t_link_owner, brains_object=True, sort=False)"
-                    >
+                            bs_tool here/portal_bibliostyles;">
+		    
+	<tal:loop tal:repeat="refs structural_refs">
+	
+	<h3 tal:condition="python: len(structural_refs) > 1" tal:content="python: refs[0][structural_layout]" />
+
+	<tal:structural-layout tal:define="formatted_list python:bs_tool.formatList(refs, style, title_link=t_link, title_link_only_if_owner=t_link_owner, brains_object=True, sort=False);">
 
         <tal:bibliotopic condition="formatted_list">
           <ul tal:condition="python:list_layout=='bulleted'">
@@ -72,8 +79,12 @@
           </table>
         </tal:bibliotopic>
 
+	<br />
+	</tal:structural-layout>
+	</tal:loop>
+
         <p class="discreet"
-           tal:condition="python: not formatted_list and (not mtool.checkPermission('ModifyPortalContent', here) or here.listCriteria())"
+           tal:condition="python: not search_result and (not mtool.checkPermission('ModifyPortalContent', here) or here.listCriteria())"
            i18n:translate="bibliotopic_nothing_listed">
             No bibliographical references have been found for this context.
         </p>

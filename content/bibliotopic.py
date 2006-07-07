@@ -14,6 +14,7 @@
 #
 
 from Acquisition import aq_parent, aq_inner
+import Missing
 
 from Products.CMFCore import permissions
 from Products.ATContentTypes import permission as atct_permissions
@@ -343,12 +344,66 @@ class BibliographyTopic(ATTopic):
 		return record['ctypes']
 	return ()
 
+    security.declareProtected(permissions.View, 'getStructuralLayoutRefs')
+    def getStructuralLayoutRefs(self, search_result, structural_layout='', structural_layout_reverse=False):
+
+	if structural_layout == 'none':
+	    return [search_result]
+	    
+	catalog = getToolByName(self, 'portal_catalog')
+	putils = getToolByName(self, 'plone_utils')
+	catalogIndexes = catalog.indexes()
+	
+	structure_by = []
+    	
+	data_objects = []
+	for item in search_result:
+	    path = item.getPath()
+	    item_url = item.getURL()
+	    brain_data = {
+		'path' : path,
+		'absolute_url': item_url,
+	        'Title': putils.pretty_title_or_id(item),
+		'icon': item.getIcon,
+	    }
+	    for index in catalogIndexes:
+		if hasattr(item, index) and (eval('item.%s' % index) != Missing.Value):
+		    brain_data[index] = eval('item.%s' % index)
+	    
+	    data_objects.append(brain_data)
+	    
+	    if structural_layout in brain_data.keys():
+		structure_by.append(brain_data[structural_layout])
+		
+	structure_by.sort()
+	if structural_layout_reverse:
+	    structure_by.reverse()
+	    
+	structure_heads = []
+	for element in structure_by:
+	    if element not in structure_heads:
+    		structure_heads.append(element)
+
+	structural_refs = []    
+	for struct_head in structure_heads:
+		    
+	    structural_par = []
+	    for item in search_result:
+	    
+		if item[structural_layout] == struct_head:
+		    structural_par.append(item)
+
+	    structural_refs.append(structural_par)
+	    
+	return structural_refs
+
     security.declareProtected(permissions.View, 'buildQuery')
     def buildQuery(self, **kw):
         """Build Query
         """
 
 	query = {}
+
 	criteria = self.listCriteria()
         acquire = self.getAcquireCriteria()
         mtool = getToolByName(self, 'portal_membership')
