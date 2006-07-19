@@ -37,9 +37,11 @@ try:
     from Products.CMFBibliographyAT_extended_schemata.config import BIBLIOTOPIC_EXTENDEDSCHEMATA_STRUCTURAL_LAYOUT
 except ImportError:
     BIBLIOTOPIC_EXTENDEDSCHEMATA_STRUCTURAL_LAYOUT = []
+
 STRUCTURAL_VALUES = DisplayList(tuple([
     ('none','No Substructuring'),
     ('publication_year', 'Publication Year'),
+    ('portal_type', 'Reference Type'),
     ('Authors', 'Authors\' Names'),
     ]
     + BIBLIOTOPIC_EXTENDEDSCHEMATA_STRUCTURAL_LAYOUT

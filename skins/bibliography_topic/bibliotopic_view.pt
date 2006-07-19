@@ -34,11 +34,13 @@
                             list_layout here/getListingLayout|nothing;
                             t_link here/getLinkToOriginalRef;
                             t_link_owner here/getLinkToOriginalRefOnlyIfOwner;
-                            bs_tool here/portal_bibliostyles;">
+                            bs_tool here/portal_bibliostyles;
+			    types_tool here/portal_types;">
 		    
 	<tal:loop tal:repeat="refs structural_refs">
 	
-	<h3 tal:condition="python: len(structural_refs) > 1" tal:content="python: refs[0][structural_layout]" />
+	<h3 tal:condition="python: (len(structural_refs) > 1) and (structural_layout != 'portal_type')" tal:content="python: refs[0][structural_layout]" />
+	<h3 tal:condition="python: (len(structural_refs) > 1) and (structural_layout == 'portal_type')" tal:content="python: here.translate(types_tool.getTypeInfo(refs[0][structural_layout]).Title())" />
 
 	<tal:structural-layout tal:define="formatted_list python:bs_tool.formatList(refs, style, title_link=t_link, title_link_only_if_owner=t_link_owner, brains_object=True, sort=False);">
 

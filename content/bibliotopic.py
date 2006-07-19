@@ -352,6 +352,8 @@ class BibliographyTopic(ATTopic):
 	    
 	catalog = getToolByName(self, 'portal_catalog')
 	putils = getToolByName(self, 'plone_utils')
+	bib_tool = getToolByName(self, 'portal_bibliography')
+	types_tool = getToolByName(self, 'portal_types')
 	catalogIndexes = catalog.indexes()
 	
 	structure_by = []
@@ -381,9 +383,10 @@ class BibliographyTopic(ATTopic):
 	    
 	structure_heads = []
 	for element in structure_by:
+	    
 	    if element not in structure_heads:
     		structure_heads.append(element)
-
+	
 	structural_refs = []    
 	for struct_head in structure_heads:
 		    
@@ -394,7 +397,7 @@ class BibliographyTopic(ATTopic):
 		    structural_par.append(item)
 
 	    structural_refs.append(structural_par)
-	    
+
 	return structural_refs
 
     security.declareProtected(permissions.View, 'buildQuery')
