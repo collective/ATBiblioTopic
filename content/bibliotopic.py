@@ -33,15 +33,15 @@ try:
   from Products.LinguaPlone.public import Schema, MetadataSchema
   from Products.LinguaPlone.public import registerType, listTypes
   from Products.LinguaPlone.public import DisplayList
-  from Products.LinguaPlone.public import StringField, ReferenceField, BooleanField
-  from Products.LinguaPlone.public import SelectionWidget, ReferenceWidget, BooleanWidget
+  from Products.LinguaPlone.public import StringField, ReferenceField, BooleanField, TextField
+  from Products.LinguaPlone.public import SelectionWidget, ReferenceWidget, BooleanWidget, RichWidget
   
 except:
   from Products.Archetypes.public import Schema, MetadataSchema
   from Products.Archetypes.public import registerType, listTypes
   from Products.Archetypes.public import DisplayList
-  from Products.Archetypes.public import StringField, ReferenceField, BooleanField
-  from Products.Archetypes.public import SelectionWidget, ReferenceWidget, BooleanWidget
+  from Products.Archetypes.public import StringField, ReferenceField, BooleanField, TextField
+  from Products.Archetypes.public import SelectionWidget, ReferenceWidget, BooleanWidget, RichWidget
  
 from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import ReferenceBrowserWidget
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
@@ -91,6 +91,21 @@ relatedItemsField = ReferenceField('relatedItems',
 
 BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
     (
+        TextField('biblioTopicHeader',
+            searchable = True,
+            required=0,
+            default_content_type='text/html',
+            default_output_type='text/html',
+            allowable_content_types=('text/html',),
+            widget=RichWidget(
+                label='Smart Bibliography List Header',
+                label_msgid='label_bibliotopic_header',
+                description='',
+                description_msgid='"help_bibliotopic_header',
+                i18n_domain = 'atbibliotopic',
+                rows=8,
+            ),
+        ),
         StringField('ListingLayout',
             multiValued=0,
             default = "bulletted",
@@ -193,6 +208,21 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
                         i18n_domain="atbibliotopic",
             ),      
         ),
+        TextField('biblioTopicFooter',
+            searchable = True,
+            required=0,
+            default_content_type='text/html',
+            default_output_type='text/html',
+            allowable_content_types=('text/html',),
+            widget=RichWidget(
+                label='Smart Bibliography List Footer',
+                label_msgid='label_bibliotopic_footer',
+                description='',
+                description_msgid='"help_bibliotopic_footer',
+                i18n_domain = 'atbibliotopic',
+                rows=8,
+            ),
+        ),
         relatedItemsField,
     ), marshall=PrimaryFieldMarshaller,
 ) + MetadataSchema(
@@ -216,7 +246,8 @@ BibliographyTopicSchema['limitNumber'].languageIndependent = True
 BibliographyTopicSchema['itemCount'].languageIndependent = True
 BibliographyTopicSchema['customView'].languageIndependent = True
 BibliographyTopicSchema['customViewFields'].languageIndependent = True
-BibliographyTopicSchema.moveField('acquireCriteria', after='description')
+BibliographyTopicSchema.moveField('biblioTopicHeader', after='description')
+BibliographyTopicSchema.moveField('acquireCriteria', after='biblioTopicHeader')
 BibliographyTopicSchema.moveField('ListingLayout', after='acquireCriteria')
 BibliographyTopicSchema.moveField('StructuralLayout', after='ListingLayout')
 BibliographyTopicSchema.moveField('StructuralLayoutReverseOrder', after='StructuralLayout')
@@ -225,7 +256,7 @@ BibliographyTopicSchema.moveField('linkToOriginalRef', after='PresentationStyle'
 BibliographyTopicSchema.moveField('linkToOriginalRefOnlyIfOwner', after='linkToOriginalRef')
 BibliographyTopicSchema.moveField('filterReferencesByWorkflowState', after='linkToOriginalRefOnlyIfOwner')
 BibliographyTopicSchema.moveField('associatedBibFolder', after='filterReferencesByWorkflowState')
-BibliographyTopicSchema.moveField('relatedItems', after='customViewFields')
+BibliographyTopicSchema.moveField('relatedItems', after='biblioTopicFooter')
 BibliographyTopicSchema.moveField('excludeFromNav', before='allowDiscussion')
 
 #def SearchableAuthors(obj, portal, **kwargs):

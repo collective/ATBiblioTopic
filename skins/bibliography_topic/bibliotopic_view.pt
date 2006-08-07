@@ -24,6 +24,8 @@
             description
         </div>
 
+        <div tal:condition="here/getBiblioTopicHeader" tal:content="structure here/getBiblioTopicHeader" />
+
         <metal:listing define-macro="biliotopic-listing"
                     tal:define="
 			    structural_layout here/getStructuralLayout;
@@ -98,6 +100,8 @@
                 There are currently no criteria on which to search.
                 Please add them using the 'criteria' tab.
         </p>
+
+      <div tal:condition="here/getBiblioTopicFooter" tal:content="structure here/getBiblioTopicFooter" />
 
       </metal:listing>
       <metal:body define-macro="folderlisting_macro">
