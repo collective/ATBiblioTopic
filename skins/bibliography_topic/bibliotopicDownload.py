@@ -20,9 +20,14 @@ RESPONSE.setHeader('Content-Disposition',
 bibtool = context.portal_bibliography
 output = ''
 brains = context.queryCatalog()
-for brain in brains:
-    obj = brain.getObject()
-    output += bibtool.render(obj, format)
+
+# in our case (ATBiblioList) the renderer can copy with a list of
+# bibliographical reference items. If it encounters a portal_type
+# that is not a bibref item, it will ignore this.
+# BUT: the first object we pass to the renderer will be used to
+# generate a title, URL etc. That's why we pass the context (the bibliolist)
+# object as first object to the renderer...
+output += bibtool.render([context] + [ brain.getObject() for brain in brains ], format)
 
 return output
     
