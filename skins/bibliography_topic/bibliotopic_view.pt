@@ -3,7 +3,15 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="plone">
 <body>
-
+<metal:cssslot fill-slot="css_slot">
+    <style type="text/css"
+           media="all">
+               
+         .link-silent { text-decoration: none; }
+                     
+     </style>
+</metal:cssslot>
+                                                                          
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
 
