@@ -12,7 +12,9 @@
                    Iterator python:modules['Products.CMFPlone'].IndexIterator;
                    tabindex python:Iterator();">
 
-    <h1 i18n:translate="heading_pubref_download">Export Bibliographic Entries</h1>
+    <h1><span tal:content="here/Title" /> - <span i18n:translate="heading_pubref_download">Export Bibliographic Entries</span></h1>
+
+    <p class="documentDescription" tal:content="here/Description" />
 
     <p i18n:translate="description_pubref_download"> 
       Select the format from the drop-down list. Confirm by clicking 
@@ -33,20 +35,23 @@
         <div class="field">
           <label i18n:translate="label_bibliography_export_format">Export Format</label>
 
-          <div class="formHelp" i18n:translate="help_bibliography_export_format">
+          <div i18n:translate="help_bibliography_export_format">
             Please select the format.
           </div>
 
             <tal:formats tal:repeat="format python: here.portal_bibliography.getExportFormats()">
+            <div>
             <input class="noborder" name="format" type="radio"
                    tal:attributes="tabindex tabindex/next;
                                    id python: 'render_%s' % format[1];
                                    value python:format[1];
-                                   checked python: test(format[0] == 'BibTex', 'checked', None);" />
+                                   checked python: test(format[1] == 'bib', 'checked', None);" />
             <label tal:attributes="for python: 'render_%s' % format[1];"
                    tal:content="python: format[0]" /><br />
+            </div>
+            <div class="formHelp" tal:content="python: format[2]" />
             </tal:formats>
-
+        
         </div>
 
         <div class="formControls">
