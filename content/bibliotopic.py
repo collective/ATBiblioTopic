@@ -322,7 +322,7 @@ class BibliographyTopic(ATTopic):
         {
          'id'          : 'exportBib',
          'name'        : 'Export Bibliography',
-         'action'      : 'string:${object_url}/bibliotopicDownloadForm',
+         'action'      : 'string:${object_url}/bibliotopic_exportForm',
          'permissions' : (permissions.View, ),
          'category'    : 'document_actions',
         },

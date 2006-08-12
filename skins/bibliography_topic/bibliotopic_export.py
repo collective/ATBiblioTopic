@@ -4,7 +4,7 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=format='BiBTex'
+##parameters=format='BiBTex', output_encoding=None
 ##title=
 ##
 request = container.REQUEST
@@ -27,7 +27,7 @@ brains = context.queryCatalog()
 # BUT: the first object we pass to the renderer will be used to
 # generate a title, URL etc. That's why we pass the context (the bibliolist)
 # object as first object to the renderer...
-output += bibtool.render([context] + [ brain.getObject() for brain in brains ], format)
+output += bibtool.render([context] + [ brain.getObject() for brain in brains ], format=format, output_encoding=output_encoding)
 
 return output
     
