@@ -286,7 +286,7 @@ class BibliographyTopic(ATTopic):
     archetype_name  = 'Smart Bibliography List'
     _at_rename_after_create = True
 
-    allowed_content_types = ('BiblioTopic',)
+    allowed_content_types = ('BibliographyTopic',)
     default_view    = 'bibliotopic_view'
     immediate_view  = 'bibliotopic_view'
     assocMimetypes  = ('application/xhtml+xml','message/rfc822','text/*')
@@ -327,13 +327,6 @@ class BibliographyTopic(ATTopic):
          'category'    : 'document_actions',
         },
         {
-         'id'           : 'addBibReferences',
-         'name'         : 'Add Reference',
-         'action'       : 'python: "%s/folder_factories" % object.getAssociatedBibFolderUrl()',
-         'permissions'  : (BIBFOLDER_ADD_CONTENT_PERMISSION,),
-         'condition'    : 'python:object.getAssociatedBibFolder() is not None',
-        },
-        {
          'id'           : 'import',
          'name'         : 'Import',
          'action'       : 'string:${object_url}/bibliography_importForm',
@@ -345,7 +338,8 @@ class BibliographyTopic(ATTopic):
          'name': 'Sharing',
          'action': 'string:${object_url}/folder_localrole_form',
 	 'permissions': (permissions.ManageProperties,),
-        },
+         'condition': 'python: object.portal_membership.checkPermission("ManageProperties", object)',
+	},
     )
 
     security = ClassSecurityInfo()
