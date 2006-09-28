@@ -101,6 +101,11 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
         'custom_view'   : True,                   
 	'ctypes'	: ('ATPathCriterion',),
     },	
+    {
+	'field'		: ('portal_type','Reference Type(s)', 'Select reference types that you want to include into your smart bibliography list',''),
+        'custom_view'   : True,                   
+	'ctypes'	: ('ATPortalTypeCriterion',),
+    },	    
 ] + BIBLIOTOPIC_EXTENDEDSCHEMATA_CRITERIAFIELDS
 BIBLIOTOPIC_SORTFIELDS = [
     {

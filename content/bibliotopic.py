@@ -56,7 +56,7 @@ from Products.ATBiblioTopic.config import BIBLIOTOPIC_SORTFIELDS
 from Products.ATBiblioTopic.config import BIBLIOTOPIC_INDEXES
 
 # possible types of bibliographic references from module 'CMFBibliographyAT'
-from Products.CMFBibliographyAT.config import REFERENCE_TYPES, \
+from Products.CMFBibliographyAT.config import \
      FOLDER_TYPES as BIB_FOLDER_TYPES, \
      ADD_CONTENT_PERMISSION as BIBFOLDER_ADD_CONTENT_PERMISSION, \
      PROJECTNAME as BIBLIOGRAPHY_PROJECTNAME
@@ -270,7 +270,6 @@ BibliographyTopicSchema.moveField('excludeFromNav', before='allowDiscussion')
 #
 #registerIndexableAttribute('SearchableAuthors', SearchableAuthors)
 
-
 class BibliographyTopic(ATTopic):
     """Content type for dynamic listings of bibliographical references.
     """
@@ -435,7 +434,8 @@ class BibliographyTopic(ATTopic):
 	criteria = self.listCriteria()
         acquire = self.getAcquireCriteria()
         mtool = getToolByName(self, 'portal_membership')
-
+	bib_tool = getToolByName(self, 'portal_bibliography')
+	
         if not acquire and not criteria:
           return None 
 
@@ -455,7 +455,8 @@ class BibliographyTopic(ATTopic):
             
                 query[key] = value
 
-        query['portal_type'] = tuple(REFERENCE_TYPES)
+	if not query.has_key('portal_type'):
+    	    query['portal_type'] = tuple(bib_tool.getReferenceTypes())
         
         if self.getFilterReferencesByWorkflowState():
             navtool = getToolByName(self, 'portal_properties').navtree_properties
@@ -464,7 +465,7 @@ class BibliographyTopic(ATTopic):
                 #if mtool.isAnonymousUser():
                 query['review_state'] = navtool.wf_states_to_show
 
-        #print query
+        print query
 
         return query or None
 
@@ -518,7 +519,8 @@ class BibliographyTopic(ATTopic):
     def listBibReferenceTypes(self):
         """Return a DisplayList containing all available bibref items
         """
-        return DisplayList(tuple([(type['klass'].portal_type, type['klass'].archetype_name) for type in listTypes(BIBLIOGRAPHY_PROJECTNAME) if type['klass'].portal_type in REFERENCE_TYPES ]))
+	bib_tool = getToolByName(self, 'portal_bibliography')
+        return DisplayList(tuple([(type['klass'].portal_type, type['klass'].archetype_name) for type in listTypes(BIBLIOGRAPHY_PROJECTNAME) if type['klass'].portal_type in bib_tool.getReferenceTypes() ]))
 
     security.declareProtected(permissions.View, 'isAllowedToAddBibReferences')
     def isAllowedToAddBibReferences(self):

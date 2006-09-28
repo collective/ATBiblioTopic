@@ -22,6 +22,7 @@ from config import ADD_CONTENT_PERMISSION
 registerDirectory('skins', GLOBALS)
 
 import content
+import criteria
 
 def initialize(context):
 
