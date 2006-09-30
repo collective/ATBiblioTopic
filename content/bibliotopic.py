@@ -259,17 +259,6 @@ BibliographyTopicSchema.moveField('associatedBibFolder', after='filterReferences
 BibliographyTopicSchema.moveField('relatedItems', after='biblioTopicFooter')
 BibliographyTopicSchema.moveField('excludeFromNav', before='allowDiscussion')
 
-#def SearchableAuthors(obj, portal, **kwargs):
-#    """return all authors of bibliography references in a single string
-#    """
-#    if hasattr(obj, 'getAuthors'):
-#	print obj.getAuthors().lower()
-#    if (obj.portal_type in REFERENCE_TYPES) and obj.getAuthors():
-#        return obj.getAuthors().lower()
-#    return ''
-#
-#registerIndexableAttribute('SearchableAuthors', SearchableAuthors)
-
 class BibliographyTopic(ATTopic):
     """Content type for dynamic listings of bibliographical references.
     """
@@ -465,7 +454,7 @@ class BibliographyTopic(ATTopic):
                 #if mtool.isAnonymousUser():
                 query['review_state'] = navtool.wf_states_to_show
 
-        print query
+        #print query
 
         return query or None
 
