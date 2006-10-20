@@ -106,6 +106,12 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
         'custom_view'   : True,                   
 	'ctypes'	: ('ATPortalTypeCriterion',),
     },	    
+    {
+        'field'         : ('AuthorItems','Single (Co)Author', 'Search for all publications of a specific author (format: last name and first initial like in "Smith J")',''),
+        'custom_view'   : True, 
+        'index_type'    : 'KeywordIndex',                  
+        'ctypes'        : ('ATSimpleStringCriterion',),
+    },
 ] + BIBLIOTOPIC_EXTENDEDSCHEMATA_CRITERIAFIELDS
 BIBLIOTOPIC_SORTFIELDS = [
     {
