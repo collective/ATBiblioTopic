@@ -35,7 +35,6 @@ def addIndexesToCatalogTool(self, out):
     if ctool:
         # add indexes and metadatas to the portal catalog
         ct = getToolByName(self, 'portal_catalog')
-        print CATALOG_INDEXES
         for idx in CATALOG_INDEXES:
             if idx['name'] in ct.indexes():
 	        ct.delIndex(idx['name'])
