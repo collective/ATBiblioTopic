@@ -1,8 +1,8 @@
-# Gettext Message File for ATBiblioTopic.
-# Mike Gabriel <m.gabriel@sunweavers.net>, 2006
+# Gettext Message File for ATBiblioTopic
+# Mike Gabriel et al. <plone-biblio@zaubberer.net>, 2006
 msgid ""
 msgstr ""
-"Project-Id-Version: ATBiblioTopic svn/trunk\n"
+"Project-Id-Version: ATBiblioTopic 0.9\n"
 "Report-Msgid-Bugs-To: m.gabriel@sunweavers.net\n"
 "POT-Creation-Date: 2006-04-01 16:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"

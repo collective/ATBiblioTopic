@@ -1,6 +1,8 @@
+# Gettext Message File for ATBiblioTopic
+# Mike Gabriel et al. <plone-biblio@zaubberer.net>, 2006
 msgid ""
 msgstr ""
-"Project-Id-Version: ATBiblioTopic svn/trunk\n"
+"Project-Id-Version: ATBiblioTopic 0.9\n"
 "POT-Creation-Date: 2004-04-13 21:25+0000\n"
 "PO-Revision-Date: 2004-04-16 21:01+0100\n"
 "Last-Translator: Mike Gabriel <m.gabriel@sunweavers.net>\n"
@@ -9,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Domain: plone\n"
+"Domain: atbibliotopic\n"
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: latin1\n"

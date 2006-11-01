@@ -1,6 +1,8 @@
+# Gettext Message File for ATBiblioTopic
+# Mike Gabriel et al. <plone-biblio@zaubberer.net>, 2006
 msgid ""
 msgstr ""
-"Project-Id-Version: ATBiblioTopic svn/trunk\n"
+"Project-Id-Version: ATBiblioTopic 0.9\n"
 "POT-Creation-Date: 2004-04-13 21:25+0000\n"
 "PO-Revision-Date: 2004-04-16 21:01+0100\n"
 "Last-Translator: David Convent <david.convent@naturalsciences.be>\n"
