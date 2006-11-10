@@ -459,7 +459,7 @@ class BibliographyTopic(ATTopic):
             
                 query[key] = value
 
-	if not query.has_key('portal_type'):
+	if query and not query.has_key('portal_type'):
     	    query['portal_type'] = tuple(bib_tool.getReferenceTypes())
         
         if self.getFilterReferencesByWorkflowState():
@@ -468,8 +468,6 @@ class BibliographyTopic(ATTopic):
             if navtool.getProperty('enable_wf_state_filtering', False):
                 #if mtool.isAnonymousUser():
                 query['review_state'] = navtool.wf_states_to_show
-
-        #print query
 
         return query or None
 
