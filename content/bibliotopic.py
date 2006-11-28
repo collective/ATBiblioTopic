@@ -210,6 +210,16 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
                         visible={'edit':'visible','view':'invisible'},
             ),
         ),
+        BooleanField('noWfStateFilterIfOwnerOfReference',
+    	    languageIndependent = True,
+            widget=BooleanWidget(label="No Workflow State Filter if Owner of References",
+                        label_msgid="label_bibliotopic_nowfstatefilterifownerofreference",
+                        description_msgid="help_bibliotopic_nowfstatefilterifownerofreference",
+                        description="Do explicitly show references that are owned by the logged-in user (also includes Manager role).",
+                        i18n_domain="atbibliotopic",
+                        visible={'edit':'visible','view':'invisible'},
+            ),
+        ),
         ReferenceField('associatedBibFolder',
             multiValued=0,
             relationship=ATBIBLIOTOPIC_BIBFOLDER_REF,
@@ -270,7 +280,8 @@ BibliographyTopicSchema.moveField('PresentationStyle', after='StructuralLayoutRe
 BibliographyTopicSchema.moveField('linkToOriginalRef', after='PresentationStyle')
 BibliographyTopicSchema.moveField('linkToOriginalRefOnlyIfOwner', after='linkToOriginalRef')
 BibliographyTopicSchema.moveField('filterReferencesByWorkflowState', after='linkToOriginalRefOnlyIfOwner')
-BibliographyTopicSchema.moveField('associatedBibFolder', after='filterReferencesByWorkflowState')
+BibliographyTopicSchema.moveField('noWfStateFilterIfOwnerOfReference', after='filterReferencesByWorkflowState')
+BibliographyTopicSchema.moveField('associatedBibFolder', after='noWfStateFilterIfOwnerOfReference')
 BibliographyTopicSchema.moveField('relatedItems', after='biblioTopicFooter')
 BibliographyTopicSchema.moveField('excludeFromNav', before='allowDiscussion')
 
@@ -354,15 +365,6 @@ class BibliographyTopic(ATTopic):
         bstool = getToolByName(self, 'portal_bibliostyles') or None
         return DisplayList(bstool.findBibrefStyles())
                                     
-    #security.declareProtected(atct_permissions.ChangeTopics, 'getSortCriterion')
-    #def getSortCriterion(self):
-    #   """return criterion object"""
-    #	for criterion in self.listCriteria():
-    #	    if criterion.Field() in [ crit_field['field'][0] for crit_field in BIBLIOTOPIC_SORTFIELDS if crit_field['portal_type'] == self.getPortalTypeToQuery() ]:
-    #		if IATTopicSortCriterion.isImplementedBy(criterion):
-    #		    return criterion
-    #	return None
-    
     security.declareProtected(atct_permissions.ChangeTopics, 'criteriaByIndexId')
     def criteriaByIndexId(self, indexId):
         # do not change the order of BIBLIOTOPIC_SORTFIELDS + BIBLIOTOPIC_CRITERIAFIELDS
@@ -371,6 +373,17 @@ class BibliographyTopic(ATTopic):
 	    if indexId == record['field'][0]:
 		return record['ctypes']
 	return ()
+
+    security.declareProtected(permissions.View, 'filterWfStateIfNotOwner')
+    def filterWfStateIfNotOwnerOfReference(self, unfiltered=None):
+
+	if unfiltered is not None and self.getNoWfStateFilterIfOwnerOfReference():
+	    
+	    navtool = getToolByName(self, 'portal_properties').navtree_properties
+            mtool = getToolByName(self, 'portal_membership')
+            return [ brain for brain in unfiltered if (self.getFilterReferencesByWorkflowState() and (brain.review_state in navtool.wf_states_to_show)) or mtool.checkPermission(permissions.ModifyPortalContent, brain.getObject()) ]
+
+	return unfiltered
 
     security.declareProtected(permissions.View, 'getStructuralLayoutRefs')
     def getStructuralLayoutRefs(self, search_result, structural_layout='', structural_layout_reverse=False):
@@ -466,8 +479,10 @@ class BibliographyTopic(ATTopic):
             navtool = getToolByName(self, 'portal_properties').navtree_properties
             mtool = getToolByName(self, 'portal_membership')
             if query and navtool.getProperty('enable_wf_state_filtering', False):
-                #if mtool.isAnonymousUser():
-                query['review_state'] = navtool.wf_states_to_show
+                if mtool.isAnonymousUser() or not self.getNoWfStateFilterIfOwnerOfReference():
+            	    query['review_state'] = navtool.wf_states_to_show
+		else:
+		    pass
 
         return query or None
 
