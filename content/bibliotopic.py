@@ -374,7 +374,7 @@ class BibliographyTopic(ATTopic):
 		return record['ctypes']
 	return ()
 
-    security.declareProtected(permissions.View, 'filterWfStateIfNotOwner')
+    security.declareProtected(permissions.View, 'filterWfStateIfNotOwnerOfReference')
     def filterWfStateIfNotOwnerOfReference(self, unfiltered=None):
 
 	if unfiltered is not None and self.getNoWfStateFilterIfOwnerOfReference():
