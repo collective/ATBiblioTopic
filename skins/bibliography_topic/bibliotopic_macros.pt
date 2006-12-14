@@ -29,10 +29,9 @@
                />
       </td>
       
-      <td style="padding: 0.5em;"
-          i18n:domain="atbibliotopic">
+      <td style="padding: 0.5em;">
          <span tal:content="python:index.friendlyName or index.index" i18n:translate="" />
-         <div class="formHelp" tal:content="index/description" i18n:translate="" />
+         <div class="formHelp" tal:content="index/description" i18n:domain="atbibliotopic" i18n:translate="" />
       </td>
       <td style="padding: 0.5em;">
 

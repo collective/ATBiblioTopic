@@ -83,7 +83,7 @@
                 </tr>
             </thead>
 
-            <tbody i18n:domain="atbibliotopic">
+            <tbody i18n:domain="atcontenttypes">
                 <tal:criteria repeat="criterion criteria">
                     <tr tal:define="oddrow repeat/criterion/odd;"
                         tal:attributes="class python:test(oddrow, 'even', 'odd')"
@@ -154,8 +154,7 @@
                         tabindex=""
                         onchange=""
                         tal:attributes="tabindex tabindex/next;
-                                        onchange string:javascript:showHelp(this.options[this.selectedIndex], 'fieldHelp');"
-                        i18n:domain="atbibliotopic">
+                                        onchange string:javascript:showHelp(this.options[this.selectedIndex], 'fieldHelp');">
                 <tal:options tal:repeat="field fields">
                     <option value=""
                             tal:define="explanation python:field[2]"
@@ -163,6 +162,7 @@
                                             title python:explanation"
                             tal:content="python:field[1]"
                             tal:condition="python:here.allowedCriteriaForField(field[0])"
+                            i18n:domain="plone"
                             i18n:attributes="title"
                             i18n:translate="">
                             Field
