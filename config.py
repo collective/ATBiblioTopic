@@ -39,7 +39,7 @@ except ImportError:
     BIBLIOTOPIC_EXTENDEDSCHEMATA_STRUCTURAL_LAYOUT = []
 
 STRUCTURAL_VALUES = DisplayList(tuple([
-    ('none','No Substructuring'),
+    ('none','No structuring'),
     ('publication_year', 'Publication Year'),
     ('portal_type', 'Reference Type'),
     ('Authors', 'Authors\' Names'),
@@ -80,50 +80,50 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
 	'ctypes'	: ('ATSimpleStringCriterion', ),
     },	
     {
-	'field'		: ('getAuthors','Authors','Author of referenced bibliographical item',''),
+	'field'		: ('getAuthors','Authors','Author(s) of referenced bibliographical items.',''),
         'catalog'       : True,
         'custom_view'   : True,                   
         'index_type'    : text_index_type,
 	'ctypes'	: ( 'ATSimpleStringCriterion',),
     },	
     {
-        'field'         : ('AuthorItems','Single (Co)Author', 'Search for all publications of a specific author (format: last name and first initial like in "Smith J")',''),
+        'field'         : ('AuthorItems','Single (Co)Author', 'Search for all publications of a specific author (format: last name and first initial like in "Smith J").',''),
         'custom_view'   : True, 
         'index_type'    : 'KeywordIndex',                  
         'ctypes'        : ('ATSimpleStringCriterion',),
     },
     {
-	'field'		: ( 'publication_date', 'Publication Date', 'Publication date of the referenced bibliographical item',),
+	'field'		: ( 'publication_date', 'Publication Date', 'Publication date of referenced bibliographical items.',),
         'custom_view'   : True,                   
 	'ctypes'	: ( 'ATDateRangeCriterion', 'ATFriendlyDateCriteria',),
     },	
     {
-	'field'		: ('Title','Title', 'Title of the referenced bibliography item',''),
+	'field'		: ('Title','Title', 'Title of referenced bibliographical items.',''),
         'custom_view'   : True,                   
 	'ctypes'	: ('ATSimpleStringCriterion',),
     },	
     {
-	'field'		: ('path','Website Path', 'Select specific subtrees of your site to be searched for bibliographical items',''),
+	'field'		: ('path','Website Path', 'Select specific subtrees of your site to be searched for bibliographical items.',''),
         'custom_view'   : True,                   
 	'ctypes'	: ('ATPathCriterion',),
     },	
     {
-	'field'		: ('portal_type','Reference Type(s)', 'Select reference types that you want to include into your smart bibliography list',''),
+	'field'		: ('portal_type','Reference Type(s)', 'Select reference types that you want to include into your smart bibliography list.',''),
         'custom_view'   : True,                   
 	'ctypes'	: ('ATPortalTypeCriterion',),
     },	    
 ] + BIBLIOTOPIC_EXTENDEDSCHEMATA_CRITERIAFIELDS
 BIBLIOTOPIC_SORTFIELDS = [
     {
-	'field'		: ( 'publication_year', 'Publication Year', 'Publication year of the referenced bibliographical item',),
+	'field'		: ( 'publication_year', 'Publication Year', 'Publication year of referenced bibliographical items.',),
 	'ctypes'	: ('ATSortCriterion',),
     },	
     {
-	'field'		: ('Authors','Authors', 'Author(s) of referenced bibliographical item',),
+	'field'		: ('Authors','Authors', 'Author(s) of referenced bibliographical items.',),
 	'ctypes'	: ('ATSortCriterion', ),
     },	
     {
-	'field'		: ('sortable_title','Title', 'Title of the referenced bibliography item',''),
+	'field'		: ('sortable_title','Title', 'Title of referenced bibliographical items.',''),
 	'ctypes'	: ('ATSortCriterion',),
     },	
 ]
