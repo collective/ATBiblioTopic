@@ -13,3 +13,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Domain: plone\n"
 
+#. Default: "Smart Bibliography List"
+#: ./content/bibliotopic.py
+msgid "Smart Bibliography List"
+msgstr ""
+
+#. Default: "Use this folderish content type to specify a bibliography search criterion. According to the specified search criteria, a smart bibliography list always renders a current list of your site's bibliographical reference items."
+#: ./content/bibliotopic.py
+msgid "description_edit_bibliotopic"
+msgstr ""
+
+#. Default: "Search all reference item text fields"
+#: catalog indexes / criteria
+msgid "Search all reference item text fields"
+msgstr ""
+
+#. Default: "Single (Co)Author"
+#: catalog indexes / criteria
+msgid "AuthorItems"
+msgstr ""
+
+#. Default: "Single (Co)Author"
+#: catalog indexes / criteria
+msgid "Single (Co)Author"
+msgstr ""
+
+#. Default: "Publication Date"
+#: catalog indexes / criteria
+msgid "Publication Date"
+msgstr ""
+
+#. Default: "Reference Type(s)"
+#: catalog indexes / criteria
+msgid "Reference Type(s)"
+msgstr ""
+
+#. Default: "Title of the referenced bibliography item"
+#: catalog indexes / criteria
+msgid "Title of the referenced bibliography item"
+msgstr ""
+
+#. Default: "Website Path"
+#: catalog indexes / criteria
+msgid "Website Path"
+msgstr ""
+
+#. Default: "Publication Year"
+#: catalog indexes / criteria
+msgid "Publication Year"
+msgstr ""
+
+#. Default: "Bulleted list"
+#: vocabularies from config.py
+msgid "Bulleted list"
+msgstr ""
+
+#. Default: "Ordered list"
+#: vocabularies from config.py
+msgid "Ordered list"
+msgstr ""
+
+#. Default: "Simple lines list"
+#: vocabularies from config.py
+msgid "Simple lines list"
+msgstr ""
+
+#. Default: "Table listing"
+#: vocabularies from config.py
+msgid "Table listing"
+msgstr ""
+
+#. Default: "No structuring"
+#: vocabularies from config.py
+msgid "No structuring"
+msgstr ""
+
+#. Default: "Reference Type"
+#: vocabularies from config.py
+msgid "Reference Type"
+msgstr ""
+
+#. Default: "Authors' Names"
+#: vocabularies from config.py
+msgid "Authors' Names"
+msgstr ""
+

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ATBiblioTopic 0.9\n"
 "POT-Creation-Date: 2004-04-13 21:25+0000\n"
-"PO-Revision-Date: 2004-04-16 21:01+0100\n"
+"PO-Revision-Date: 2006-12-14 12:33-0000\n"
 "Last-Translator: Mike Gabriel <m.gabriel@sunweavers.net>\n"
 "Language-Team: ATBiblioTopic i18n <plone-biblio@zaubberer.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,3 +16,188 @@ msgstr ""
 "Language-Name: German\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
+
+#. Default: "Author(s) of referenced bibliographical items."
+#: catalog indexes / criteria
+msgid "Author(s) of referenced bibliographical items."
+msgstr "xxx"
+
+#: skins/bibliography_topic/bibliotopic_criterion_save.cpy:32
+msgid "Changes saved."
+msgstr "xxx"
+
+#. Default: "Publication date of referenced bibliographical items."
+#: catalog indexes / criteria
+msgid "Publication date of referenced bibliographical items."
+msgstr "xxx"
+
+#. Default: "Publication year of referenced bibliographical items."
+#: catalog indexes / criteria
+msgid "Publication year of referenced bibliographical items."
+msgstr "xxx"
+
+#. Default: "Search all reference item text fields"
+#: catalog indexes / criteria
+msgid "Search all reference item text fields"
+msgstr "xxx"
+
+#. Default: "Search for all publications of a specific author (format: last name and first initial like in \"Smith J\")."
+#: catalog indexes / criteria
+msgid "Search for all publications of a specific author (format: last name and first initial like in \"Smith J\")."
+msgstr "xxx"
+
+#. Default: "Select reference types that you want to include into your smart bibliography list."
+#: catalog indexes / criteria
+msgid "Select reference types that you want to include into your smart bibliography list."
+msgstr "xxx"
+
+#. Default: "Select specific subtrees of your site to be searched for bibliographical items."
+#: catalog indexes / criteria
+msgid "Select specific subtrees of your site to be searched for bibliographical items."
+msgstr "xxx"
+
+#. Default: "This criterion looks at all searchable text passages in bibliographical reference items."
+#: catalog indexes / criteria
+msgid "This criterion looks at all searchable text passages in bibliographical reference items."
+msgstr "xxx"
+
+#. Default: "Title of referenced bibliographical items."
+#: catalog indexes / criteria
+msgid "Title of referenced bibliographical items."
+msgstr "xxx"
+
+#. Default: "No bibliographical references have been found for this context."
+#: skins/bibliography_topic/bibliotopic_view.pt
+msgid "bibliotopic_nothing_listed"
+msgstr "xxx"
+
+#. Default: "Bibliographical References"
+#: skins/bibliography_topic/bibliotopic_view.pt
+msgid "header_bibrefs_listing"
+msgstr "xxx"
+
+#. Default: "Associates a specific bibliography folder with this list for the purpose of uploads (bibliography import)."
+#: content/bibliotopic.py
+msgid "help_associated_bibfolder"
+msgstr "xxx"
+
+#. Default: "Show bibliographical reference items only if their workflow state allows it."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_filterreferencesbyworkflowstate"
+msgstr "xxx"
+
+#. Default: "Text entered here will be displayed as a footer below the actual list of bibliographical references."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_footer"
+msgstr "xxx"
+
+#. Default: "Text entered here will be displayed as a header above the actual list of bibliographical references."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_header"
+msgstr "xxx"
+
+#. Default: "Should a bibliographical item's title in the list be a link to the page of the bibliographical reference?"
+#: content/bibliotopic.py
+msgid "help_bibliotopic_linktooriginalref"
+msgstr "xxx"
+
+#. Default: "If linking to pages of bibliographical entries is enabled, this switch will narrow the number of linked entries down to those items the authenticated user is owner of."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_linktooriginalrefonlyifowner"
+msgstr "xxx"
+
+#. Default: "HTML list format used for the list of bibliographical items. If you do not want your bibliography list arranged in HTML lists, choose 'Simple lines list' here."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_listinglayout"
+msgstr "xxx"
+
+#. Default: "Do explicitly show bibliographical entries that are owned by the authenticated user (checks if the user has the modify portal content permission)."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_nowfstatefilterifownerofreference"
+msgstr "xxx"
+
+#. Default: "Bibliographical style used for display. You can either choose one of the hard-coded bibliography styles here or utilize your own bibliography styles from your custom style sets."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_presentation"
+msgstr "xxx"
+
+#. Default: "Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose publication year here and use authors as the lists sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_structurallayout"
+msgstr "xxx"
+
+#. Default: "Click here if you want to structure this smart bibliography list in reverse order."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_structurallayoutreversesortorder"
+msgstr "xxx"
+
+#. Default: "Narrow down the search results from the parent Smart Bibliography List by using the criteria from this Smart Bibliography List."
+#: content/bibliotopic.py
+msgid "help_inherit_criteria"
+msgstr "xxx"
+
+#. Default: "Associated Bibliography Folder"
+#: content/bibliotopic.py
+msgid "label_associated_bibfolder"
+msgstr "xxx"
+
+#. Default: "Filter References By Workflow State"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_filterreferencesbyworkflowstate"
+msgstr "xxx"
+
+#. Default: "Smart Bibliography List Footer"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_footer"
+msgstr "xxx"
+
+#. Default: "Smart Bibliography List Header"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_header"
+msgstr "xxx"
+
+#. Default: "Link to Page of Bibliographical Entry"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_linktooriginalref"
+msgstr "xxx"
+
+#. Default: "Only Show Link to Bibliographical Entry Page if Owner"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_linktooriginalrefonlyifowner"
+msgstr "xxx"
+
+#. Default: "Listing Layout (HTML)"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_listinglayout"
+msgstr "xxx"
+
+#. Default: "No Workflow State Filter if Owner of References"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_nowfstatefilterifownerofreference"
+msgstr "xxx"
+
+#. Default: "Bibliographical Style"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_presentation"
+msgstr "xxx"
+
+#. Default: "Structural Layout"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_structurallayout"
+msgstr "xxx"
+
+#. Default: "Reverse Sort Order of Structural Layout"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_structurallayoutreverseorder"
+msgstr "xxx"
+
+#. Default: "Inherit Criteria"
+#: content/bibliotopic.py
+msgid "label_inherit_criteria"
+msgstr "xxx"
+
+#. Default: "Contained Smart Bibliography Lists:"
+#: skins/bibliography_topic/bibliotopic_view.pt
+msgid "sub_atbibliolists_heading"
+msgstr "xxx"
+

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ATBiblioTopic 0.9\n"
 "POT-Creation-Date: 2004-04-13 21:25+0000\n"
-"PO-Revision-Date: 2004-04-16 21:01+0100\n"
+"PO-Revision-Date: 2006-12-14 12:33-0000\n"
 "Last-Translator: Mike Gabriel <m.gabriel@sunweavers.net>\n"
 "Language-Team: ATBiblioTopic i18n <plone-biblio@zaubberer.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,3 +16,89 @@ msgstr ""
 "Language-Name: German\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
+
+#. Default: "Smart Bibliography List"
+#: content/bibliotopic.py
+msgid "Smart Bibliography List"
+msgstr "Intelligente Literaturliste"
+
+#. Default: "Use this folderish content type to specify a bibliography search criterion. According to the specified search criteria, a smart bibliography list always renders a current list of your site's bibliographical reference items."
+#: content/bibliotopic.py
+msgid "description_edit_bibliotopic"
+msgstr "yyy"
+
+#. Default: "Search all reference item text fields"
+#: catalog indexes / criteria
+msgid "Search all reference item text fields"
+msgstr "yyy"
+
+#. Default: "Single (Co)Author"
+#: catalog indexes / criteria
+msgid "AuthorItems"
+msgstr "yyy"
+
+#. Default: "Single (Co)Author"
+#: catalog indexes / criteria
+msgid "Single (Co)Author"
+msgstr "yyy"
+
+#. Default: "Publication Date"
+#: catalog indexes / criteria
+msgid "Publication Date"
+msgstr "yyy"
+
+#. Default: "Reference Type(s)"
+#: catalog indexes / criteria
+msgid "Reference Type(s)"
+msgstr "yyy"
+
+#. Default: "Title of the referenced bibliography item"
+#: catalog indexes / criteria
+msgid "Title of the referenced bibliography item"
+msgstr "yyy"
+
+#. Default: "Website Path"
+#: catalog indexes / criteria
+msgid "Website Path"
+msgstr "yyy"
+
+#. Default: "Publication Year"
+#: catalog indexes / criteria
+msgid "Publication Year"
+msgstr "yyy"
+
+#. Default: "Bulleted list"
+#: vocabularies from config.py
+msgid "Bulleted list"
+msgstr "yyy"
+
+#. Default: "Ordered list"
+#: vocabularies from config.py
+msgid "Ordered list"
+msgstr "yyy"
+
+#. Default: "Simple lines list"
+#: vocabularies from config.py
+msgid "Simple lines list"
+msgstr "yyy"
+
+#. Default: "Table listing"
+#: vocabularies from config.py
+msgid "Table listing"
+msgstr "yyy"
+
+#. Default: "No structuring"
+#: vocabularies from config.py
+msgid "No structuring"
+msgstr "yyy"
+
+#. Default: "Reference Type"
+#: vocabularies from config.py
+msgid "Reference Type"
+msgstr "yyy"
+
+#. Default: "Authors' Names"
+#: vocabularies from config.py
+msgid "Authors' Names"
+msgstr "yyy"
+
