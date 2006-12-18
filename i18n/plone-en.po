@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ATBiblioTopic 0.9\n"
 "POT-Creation-Date: 2004-04-13 21:25+0000\n"
-"PO-Revision-Date: 2006-12-14 12:35-0000\n"
-"Last-Translator: Mike Gabriel <m.gabriel@sunweavers.net>\n"
+"PO-Revision-Date: 2006-12-15 13:00+0100\n"
+"Last-Translator: Florian Lohmann <flohmann@ecology.uni-kiel.de>\n"
 "Language-Team: ATBiblioTopic i18n <plone-biblio@zaubberer.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -20,85 +20,85 @@ msgstr ""
 #. Default: "Smart Bibliography List"
 #: content/bibliotopic.py
 msgid "Smart Bibliography List"
-msgstr ""
+msgstr "Smart Bibliography List"
 
 #. Default: "Use this folderish content type to specify a bibliography search criterion. According to the specified search criteria, a smart bibliography list always renders a current list of your site's bibliographical reference items."
 #: content/bibliotopic.py
 msgid "description_edit_bibliotopic"
-msgstr ""
+msgstr "Use this folderish content type to specify a bibliography search criterion. According to the specified search criteria, a smart bibliography list always renders a current list of your site's bibliographical reference items."
 
 #. Default: "Search all reference item text fields"
 #: catalog indexes / criteria
 msgid "Search all reference item text fields"
-msgstr ""
+msgstr "Search all reference item text fields"
 
 #. Default: "Single (Co)Author"
 #: catalog indexes / criteria
 msgid "AuthorItems"
-msgstr ""
+msgstr "Single (Co)Author"
 
 #. Default: "Single (Co)Author"
 #: catalog indexes / criteria
 msgid "Single (Co)Author"
-msgstr ""
+msgstr "Single (Co)Author"
 
 #. Default: "Publication Date"
 #: catalog indexes / criteria
 msgid "Publication Date"
-msgstr ""
+msgstr "Publication Date"
 
 #. Default: "Reference Type(s)"
 #: catalog indexes / criteria
 msgid "Reference Type(s)"
-msgstr ""
+msgstr "Reference Type(s)"
 
 #. Default: "Title of the referenced bibliography item"
 #: catalog indexes / criteria
 msgid "Title of the referenced bibliography item"
-msgstr ""
+msgstr "Title of the referenced bibliography item"
 
 #. Default: "Website Path"
 #: catalog indexes / criteria
 msgid "Website Path"
-msgstr ""
+msgstr "Website Path"
 
 #. Default: "Publication Year"
 #: catalog indexes / criteria
 msgid "Publication Year"
-msgstr ""
+msgstr "Publication Year"
 
 #. Default: "Bulleted list"
 #: vocabularies from config.py
 msgid "Bulleted list"
-msgstr ""
+msgstr "Bulleted list"
 
 #. Default: "Ordered list"
 #: vocabularies from config.py
 msgid "Ordered list"
-msgstr ""
+msgstr "Ordered list"
 
 #. Default: "Simple lines list"
 #: vocabularies from config.py
 msgid "Simple lines list"
-msgstr ""
+msgstr "Simple lines list"
 
 #. Default: "Table listing"
 #: vocabularies from config.py
 msgid "Table listing"
-msgstr ""
+msgstr "Table listing"
 
 #. Default: "No structuring"
 #: vocabularies from config.py
 msgid "No structuring"
-msgstr ""
+msgstr "No structuring"
 
 #. Default: "Reference Type"
 #: vocabularies from config.py
 msgid "Reference Type"
-msgstr ""
+msgstr "Reference Type"
 
 #. Default: "Authors' Names"
 #: vocabularies from config.py
 msgid "Authors' Names"
-msgstr ""
+msgstr "Authors' Names"
 
