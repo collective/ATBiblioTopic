@@ -93,8 +93,8 @@ msgstr ""
 msgid "Reference Type"
 msgstr ""
 
-#. Default: "Authors' Names"
+#. Default: "Sinle (Co)Authors"
 #: vocabularies from config.py
-msgid "Authors' Names"
+msgid "Single (Co)Authors"
 msgstr ""
 

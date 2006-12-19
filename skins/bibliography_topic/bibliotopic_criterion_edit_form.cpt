@@ -162,7 +162,7 @@
                                             title python:explanation"
                             tal:content="python:field[1]"
                             tal:condition="python:here.allowedCriteriaForField(field[0])"
-                            i18n:domain="plone"
+                            i18n:domain="atcontenttypes"
                             i18n:attributes="title"
                             i18n:translate="">
                             Field

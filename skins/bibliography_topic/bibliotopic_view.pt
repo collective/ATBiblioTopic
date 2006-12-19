@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       lang="en"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="atbibliotopic">
 <body>
 <metal:cssslot fill-slot="css_slot">
     <style type="text/css"
@@ -41,6 +41,8 @@
 			    search_result python:here.queryCatalog(structural_layout=structural_layout, structural_layout_reverse=structural_layout_reverse);
 			    search_result python:here.filterWfStateIfNotOwnerOfReference(search_result);
                             structural_refs python:here.getStructuralLayoutRefs(search_result, structural_layout=structural_layout, structural_layout_reverse=structural_layout_reverse);
+                            structural_heads python: structural_refs['atbibliotopic_structural_layout'];
+                            structural_heads_mapping python: structural_refs['atbibliotopic_structural_heads_mapping'];
                             style here/getPresentationStyle;
                             list_layout here/getListingLayout|nothing;
                             t_link here/getLinkToOriginalRef;
@@ -48,12 +50,11 @@
                             bs_tool here/portal_bibliostyles;
 			    types_tool here/portal_types;">
 		    
-	<tal:loop tal:repeat="refs structural_refs">
+	<tal:loop tal:repeat="structural_head python: structural_heads">
 
-	<h3 tal:condition="python: (len(structural_refs) > 1) and (structural_layout != 'portal_type')" tal:content="python: refs[0][structural_layout]" />
-	<h3 tal:condition="python: (len(structural_refs) > 1) and (structural_layout == 'portal_type')" tal:content="python: here.translate(types_tool.getTypeInfo(refs[0][structural_layout]).Title())" />
-
-	<tal:structural-layout tal:define="formatted_list python:bs_tool.formatList(refs, style, instance=here, title_link=t_link, title_link_only_if_owner=t_link_owner, brains_object=True, sort=False);">
+        <h3 tal:condition="python: (len(structural_heads) > 1)" tal:content="python: structural_heads_mapping[structural_head]" />
+	
+        <tal:structural-layout tal:define="formatted_list python:bs_tool.formatList(structural_refs[structural_head], style, instance=here, title_link=t_link, title_link_only_if_owner=t_link_owner, brains_object=True, sort=False);">
 
         <tal:bibliotopic condition="formatted_list">
           <ul tal:condition="python:list_layout=='bulleted'">
@@ -77,7 +78,7 @@
             <thead>
               <tr>
                 <th class="nosort" i18n:translate="header_bibrefs_listing">
-                  Bibliography References
+                  Bibliographical References
                 </th>
               </tr>
             </thead>
@@ -116,9 +117,8 @@
       <metal:body define-macro="folderlisting_macro">
             <tal:subtopics condition="here/hasSubtopics"
                            define="folderContents here/getFolderContents">
-                <h2 i18n:domain="atresearchproject"
-                    i18n:translate="sub_rplists_heading">
-                    Contained Research Project Lists:
+                <h2 i18n:translate="sub_atbibliolists_heading">
+                    Contained Smart Bibliography Lists:
                 </h2>
                 <metal:list metal:use-macro="here/base/macros/folderlisting"/>
             </tal:subtopics>

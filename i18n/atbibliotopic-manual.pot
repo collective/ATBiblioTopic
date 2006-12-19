@@ -33,12 +33,12 @@ msgstr ""
 msgid "help_inherit_criteria"
 msgstr ""
 
-#. Default: "Listing Layout (HTML)"
+#. Default: "Layout of Bibliography Listing (HTML)"
 #: ./content/bibliotopic.py
 msgid "label_bibliotopic_listinglayout"
 msgstr ""
 
-#. Default: "HTML list format used for the list of bibliographical items. If you do not want your bibliography list arranged in HTML lists, choose 'Simple lines list' here."
+#. Default: "HTML format used for the list of bibliographical items. If you do not want your bibliography list arranged in HTML lists or tables, choose 'Simple lines list' here."
 #: ./content/bibliotopic.py
 msgid "help_bibliotopic_listinglayout"
 msgstr ""
@@ -83,7 +83,7 @@ msgstr ""
 msgid "help_bibliotopic_linktooriginalref"
 msgstr ""
 
-#. Default: "Only Show Link to Bibliographical Entry Page if Owner"
+#. Default: "Only Show Link to Bibliographical Entry Page If Owner"
 #: ./content/bibliotopic.py
 msgid "label_bibliotopic_linktooriginalrefonlyifowner"
 msgstr ""
@@ -103,14 +103,14 @@ msgstr ""
 msgid "help_bibliotopic_filterreferencesbyworkflowstate"
 msgstr ""
 
-#. Default: "No Workflow State Filter if Owner of References"
+#. Default: "No Workflow State Filter if User can Modify Content of Bibliographical Entry"
 #: ./content/bibliotopic.py
-msgid "label_bibliotopic_nowfstatefilterifownerofreference"
+msgid "label_bibliotopic_nowfstatefilterifusercanmodifybibrefcontent"
 msgstr ""
 
-#. Default: "Do explicitly show bibliographical entries that are owned by the authenticated user (checks if the user has the modify portal content permission)."
+#. Default: "Do explicitly show non-published bibliographical entries if the the authenticated user has permission to modify the entry's content."
 #: ./content/bibliotopic.py
-msgid "help_bibliotopic_nowfstatefilterifownerofreference"
+msgid "help_bibliotopic_nowfstatefilterifusercanmodifybibrefcontent"
 msgstr ""
 
 #. Default: "Associated Bibliography Folder"
@@ -118,7 +118,7 @@ msgstr ""
 msgid "label_associated_bibfolder"
 msgstr ""
 
-#. Default: "Associates a specific bibliography folder with this list for the purpose of uploads (bibliography import)."
+#. Default: "Associates one of the portal's bibliography folders to this list for the purpose of uploads (bibliography import)."
 #: ./content/bibliotopic.py
 msgid "help_associated_bibfolder"
 msgstr ""
@@ -158,9 +158,9 @@ msgstr ""
 msgid "Select reference types that you want to include into your smart bibliography list."
 msgstr ""
 
-#. Default: "Title of referenced bibliographical items."
+#. Default: "Full text search for title of referenced bibliographical items."
 #: catalog indexes / criteria
-msgid "Title of referenced bibliographical items."
+msgid "Full text search for title of referenced bibliographical items."
 msgstr ""
 
 #. Default: "Select specific subtrees of your site to be searched for bibliographical items."
@@ -173,8 +173,8 @@ msgstr ""
 msgid "Publication year of referenced bibliographical items."
 msgstr ""
 
-#. Default: "Author(s) of referenced bibliographical items."
+#. Default: "Full text search for authors of bibliographical entries (SearchableText expression)."
 #: catalog indexes / criteria
-msgid "Author(s) of referenced bibliographical items."
+msgid "Full text search for authors of bibliographical entries (SearchableText expression)."
 msgstr ""
 

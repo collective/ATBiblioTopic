@@ -42,7 +42,7 @@ STRUCTURAL_VALUES = DisplayList(tuple([
     ('none','No structuring'),
     ('publication_year', 'Publication Year'),
     ('portal_type', 'Reference Type'),
-    ('Authors', 'Authors\' Names'),
+    ('AuthorItems', 'Single (Co)Authors'),
     ]
     + BIBLIOTOPIC_EXTENDEDSCHEMATA_STRUCTURAL_LAYOUT
     ))
@@ -80,7 +80,7 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
 	'ctypes'	: ('ATSimpleStringCriterion', ),
     },	
     {
-	'field'		: ('getAuthors','Authors','Author(s) of referenced bibliographical items.',''),
+	'field'		: ('getAuthors','Authors','Full text search for authors of bibliographical entries (SearchableText expression).',''),
         'catalog'       : True,
         'custom_view'   : True,                   
         'index_type'    : text_index_type,
@@ -98,7 +98,7 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
 	'ctypes'	: ( 'ATDateRangeCriterion', 'ATFriendlyDateCriteria',),
     },	
     {
-	'field'		: ('Title','Title', 'Title of referenced bibliographical items.',''),
+	'field'		: ('Title','Title', 'Full text search for title of referenced bibliographical items.',''),
         'custom_view'   : True,                   
 	'ctypes'	: ('ATSimpleStringCriterion',),
     },	

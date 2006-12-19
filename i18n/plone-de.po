@@ -25,27 +25,27 @@ msgstr "Intelligente Literaturliste"
 #. Default: "Use this folderish content type to specify a bibliography search criterion. According to the specified search criteria, a smart bibliography list always renders a current list of your site's bibliographical reference items."
 #: content/bibliotopic.py
 msgid "description_edit_bibliotopic"
-msgstr "Benützen Sie diesen ordnerähnlichen Inhaltstypen, um ein Suchkriterium für die Literatursuche festzulegen. Entsprechend dieses Suchkriteriums erstellt die Intelligente Literaturliste eine Liste Ihrer aktuellen Literatureinträge."
+msgstr "Benutzen Sie diesen ordnerähnlichen Inhaltstyp, um Suchkriterien für die Literatursuche im Portal zusammenzustellen. Entsprechend dieser Suchkriterien generiert die Intelligente Literaturliste eine aktuelle Liste aller zutreffenden Literatureinträge."
 
 #. Default: "Search all reference item text fields"
 #: catalog indexes / criteria
 msgid "Search all reference item text fields"
-msgstr "Durchsuchen der Textfelder aller Referenzobjekte"
+msgstr "Textfelder von Literatureinträgen durchsuchen"
 
 #. Default: "Single (Co)Author"
 #: catalog indexes / criteria
 msgid "AuthorItems"
-msgstr "Einziger (Mit)Autor"
+msgstr "Einzelner (Mit)Autor"
 
 #. Default: "Single (Co)Author"
 #: catalog indexes / criteria
 msgid "Single (Co)Author"
-msgstr "Einziger (Mit)Autor"
+msgstr "Einzelner (Mit)Autor"
 
 #. Default: "Publication Date"
 #: catalog indexes / criteria
 msgid "Publication Date"
-msgstr "Veröffentlichungsdatum"
+msgstr "Publikationsdatum"
 
 #. Default: "Reference Type(s)"
 #: catalog indexes / criteria
@@ -55,17 +55,17 @@ msgstr "Literaturtype(n)"
 #. Default: "Title of the referenced bibliography item"
 #: catalog indexes / criteria
 msgid "Title of the referenced bibliography item"
-msgstr "Titel des referenzierten Bibliographieobjektes"
+msgstr "Titel einer referenzierten Publikation"
 
 #. Default: "Website Path"
 #: catalog indexes / criteria
 msgid "Website Path"
-msgstr "Pfad der Website"
+msgstr "Websitepfad im Portal"
 
 #. Default: "Publication Year"
 #: catalog indexes / criteria
 msgid "Publication Year"
-msgstr "Veröffentlichungsjahr"
+msgstr "Publikationsjahr"
 
 #. Default: "Bulleted list"
 #: vocabularies from config.py
@@ -75,7 +75,7 @@ msgstr "Bullet-Liste"
 #. Default: "Ordered list"
 #: vocabularies from config.py
 msgid "Ordered list"
-msgstr "Sortierte Liste"
+msgstr "Nummerierte Liste"
 
 #. Default: "Simple lines list"
 #: vocabularies from config.py
@@ -85,20 +85,20 @@ msgstr "Einfache Liste"
 #. Default: "Table listing"
 #: vocabularies from config.py
 msgid "Table listing"
-msgstr "Auflistung in Tabellen"
+msgstr "Auflistung als Tabelle"
 
 #. Default: "No structuring"
 #: vocabularies from config.py
 msgid "No structuring"
-msgstr "Keine Strukturierung"
+msgstr "Keine Untergliederung"
 
 #. Default: "Reference Type"
 #: vocabularies from config.py
 msgid "Reference Type"
 msgstr "Literaturtyp"
 
-#. Default: "Authors' Names"
+#. Default: "Single (Co)Authors"
 #: vocabularies from config.py
-msgid "Authors' Names"
-msgstr "Namen der Autoren"
+msgid "Single (Co)Authors"
+msgstr "Einzelne (Mit)Autoren"
 

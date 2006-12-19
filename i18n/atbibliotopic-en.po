@@ -17,14 +17,14 @@ msgstr ""
 "Preferred-Encodings: latin1\n"
 "X-Is-Fallback-For: en-au en-bz en-ca en-ie en-jm en-nz en-ph en-za en-tt en-gb en-us en-zw\n"
 
-#. Default: "Author(s) of referenced bibliographical items."
+#. Default: "Full text search for authors of bibliographical entries (SearchableText expression)."
 #: catalog indexes / criteria
-msgid "Author(s) of referenced bibliographical items."
-msgstr "Author(s) of referenced bibliographical items."
+msgid "Full text search for authors of bibliographical entries (SearchableText expression)."
+msgstr "Full text search for authors of bibliographical entries (SearchableText expression)."
 
 #: skins/bibliography_topic/bibliotopic_criterion_save.cpy:32
 msgid "Changes saved."
-msgstr ""
+msgstr "Changes saved."
 
 #. Default: "Publication date of referenced bibliographical items."
 #: catalog indexes / criteria
@@ -61,10 +61,10 @@ msgstr "Select specific subtrees of your site to be searched for bibliographical
 msgid "This criterion looks at all searchable text passages in bibliographical reference items."
 msgstr "This criterion looks at all searchable text passages in bibliographical reference items."
 
-#. Default: "Title of referenced bibliographical items."
+#. Default: "Full text search for title of referenced bibliographical items."
 #: catalog indexes / criteria
-msgid "Title of referenced bibliographical items."
-msgstr "Title of referenced bibliographical items."
+msgid "Full text search for title of referenced bibliographical items."
+msgstr "Full text search for title of referenced bibliographical items."
 
 #. Default: "No bibliographical references have been found for this context."
 #: skins/bibliography_topic/bibliotopic_view.pt
@@ -76,10 +76,10 @@ msgstr "No bibliographical references have been found for this context."
 msgid "header_bibrefs_listing"
 msgstr "Bibliographical References"
 
-#. Default: "Associates a specific bibliography folder with this list for the purpose of uploads (bibliography import)."
+#. Default: "Associates one of the portal's bibliography folders to this list for the purpose of uploads (bibliography import)."
 #: content/bibliotopic.py
 msgid "help_associated_bibfolder"
-msgstr "Associates a specific bibliography folder with this list for the purpose of uploads (bibliography import)."
+msgstr "Associates one of the portal's bibliography folders to this list for the purpose of uploads (bibliography import)."
 
 #. Default: "Show bibliographical reference items only if their workflow state allows it."
 #: content/bibliotopic.py
@@ -106,15 +106,15 @@ msgstr "Should a bibliographical item's title in the list be a link to the page 
 msgid "help_bibliotopic_linktooriginalrefonlyifowner"
 msgstr "If linking to pages of bibliographical entries is enabled, this switch will narrow the number of linked entries down to those items the authenticated user is owner of."
 
-#. Default: "HTML list format used for the list of bibliographical items. If you do not want your bibliography list arranged in HTML lists, choose 'Simple lines list' here."
+#. Default: "HTML format used for the list of bibliographical items. If you do not want your bibliography list arranged in HTML lists or tables, choose 'Simple lines list' here."
 #: content/bibliotopic.py
 msgid "help_bibliotopic_listinglayout"
-msgstr "HTML list format used for the list of bibliographical items. If you do not want your bibliography list arranged in HTML lists, choose 'Simple lines list' here."
+msgstr "HTML format used for the list of bibliographical items. If you do not want your bibliography list arranged in HTML lists or tables, choose 'Simple lines list' here."
 
-#. Default: "Do explicitly show bibliographical entries that are owned by the authenticated user (checks if the user has the modify portal content permission)."
+#. Default: "Do explicitly show non-published bibliographical entries if the the authenticated user has permission to modify the entry's content."
 #: content/bibliotopic.py
-msgid "help_bibliotopic_nowfstatefilterifownerofreference"
-msgstr "Do explicitly show bibliographical entries that are owned by the authenticated user (checks if the user has the modify portal content permission)."
+msgid "help_bibliotopic_nowfstatefilterifusercanmodifybibrefcontent"
+msgstr "Do explicitly show non-published bibliographical entries if the the authenticated user has permission to modify the entry's content."
 
 #. Default: "Bibliographical style used for display. You can either choose one of the hard-coded bibliography styles here or utilize your own bibliography styles from your custom style sets."
 #: content/bibliotopic.py
@@ -161,20 +161,20 @@ msgstr "Smart Bibliography List Header"
 msgid "label_bibliotopic_linktooriginalref"
 msgstr "Link to Page of Bibliographical Entry"
 
-#. Default: "Only Show Link to Bibliographical Entry Page if Owner"
+#. Default: "Only Show Link to Bibliographical Entry Page If Owner"
 #: content/bibliotopic.py
 msgid "label_bibliotopic_linktooriginalrefonlyifowner"
-msgstr "Only Show Link to Bibliographical Entry Page if Owner"
+msgstr "Only Show Link to Bibliographical Entry Page If Owner"
 
-#. Default: "Listing Layout (HTML)"
+#. Default: "Layout of Bibliography Listing (HTML)"
 #: content/bibliotopic.py
 msgid "label_bibliotopic_listinglayout"
-msgstr "Listing Layout (HTML)"
+msgstr "Layout of Bibliography Listing (HTML)"
 
-#. Default: "No Workflow State Filter if Owner of References"
+#. Default: "No Workflow State Filter if User can Modify Content of Bibliographical Entry"
 #: content/bibliotopic.py
-msgid "label_bibliotopic_nowfstatefilterifownerofreference"
-msgstr "No Workflow State Filter if Owner of References"
+msgid "label_bibliotopic_nowfstatefilterifusercanmodifybibrefcontent"
+msgstr "No Workflow State Filter if User can Modify Content of Bibliographical Entry"
 
 #. Default: "Bibliographical Style"
 #: content/bibliotopic.py
