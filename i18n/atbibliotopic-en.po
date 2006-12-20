@@ -121,10 +121,10 @@ msgstr "Do explicitly show non-published bibliographical entries if the the auth
 msgid "help_bibliotopic_presentation"
 msgstr "Bibliographical style used for display. You can either choose one of the hard-coded bibliography styles here or utilize your own bibliography styles from your custom style sets."
 
-#. Default: "Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose publication year here and use authors as the lists sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names."
+#. Default: "Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose 'Publication Year' here and use 'Authors' as the list's sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names."
 #: content/bibliotopic.py
 msgid "help_bibliotopic_structurallayout"
-msgstr "Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose publication year here and use authors as the lists sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names."
+msgstr "Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose 'Publication Year' here and use 'Authors' as the list's sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names."
 
 #. Default: "Click here if you want to structure this smart bibliography list in reverse order."
 #: content/bibliotopic.py

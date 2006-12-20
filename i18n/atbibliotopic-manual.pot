@@ -48,7 +48,7 @@ msgstr ""
 msgid "label_bibliotopic_structurallayout"
 msgstr ""
 
-#. Default: "Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose publication year here and use authors as the lists sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names."
+#. Default: "Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose 'Publication Year' here and use 'Authors' as the list's sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names."
 #: ./content/bibliotopic.py
 msgid "help_bibliotopic_structurallayout"
 msgstr ""

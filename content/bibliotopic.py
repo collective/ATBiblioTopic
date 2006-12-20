@@ -17,6 +17,7 @@ import types
 
 from Acquisition import aq_parent, aq_inner
 import Missing
+from DocumentTemplate import sequence
 
 from Products.CMFCore import permissions
 from Products.ATContentTypes import permission as atct_permissions
@@ -148,7 +149,7 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
                 label="Structural Layout",
                 label_msgid="label_bibliotopic_structurallayout",
                 description_msgid="help_bibliotopic_structurallayout",
-                description="Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose publication year here and use authors as the lists sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names.",
+                description="Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose 'Publication Year' here and use 'Authors' as the list's sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names.",
                 i18n_domain="atbibliotopic",
                 format="pulldown",
                 visible={'edit':'visible','view':'invisible'},
@@ -315,7 +316,7 @@ class BibliographyTopic(ATTopic):
     immediate_view  = 'bibliotopic_view'
     assocMimetypes  = ('application/xhtml+xml','message/rfc822','text/*')
     
-    typeDescription = ("Use this folderish content type to specify a bibliography search criterion. According to the specified search criteria, a smart bibliography list always renders a current list of your site's bibliographical reference items.")
+    typeDescription = ("Use this folderish content type to specify a set of bibliography search criteria. According to the specified search criteria, this smart bibliography list will always render a current list of your site's bibliographical reference items.")
     typeDescMsgId   = 'description_edit_bibliotopic'
     
     actions = (
@@ -380,9 +381,10 @@ class BibliographyTopic(ATTopic):
         # do not change the order of BIBLIOTOPIC_SORTFIELDS + BIBLIOTOPIC_CRITERIAFIELDS
 	# otherwise, sorting will be disabled!!!
 	for record in BIBLIOTOPIC_SORTFIELDS + BIBLIOTOPIC_CRITERIAFIELDS:
-	    if indexId == record['field'][0]:
-		return record['ctypes']
-	return ()
+	    if str(indexId) == str(record['field'][0]):
+            	return record['ctypes']
+	
+        return ()
 
     security.declareProtected(permissions.View, 'filterWfStateIfNotOwnerOfReference')
     def filterWfStateIfNotOwnerOfReference(self, unfiltered=None):
@@ -399,8 +401,11 @@ class BibliographyTopic(ATTopic):
     def getStructuralLayoutRefs(self, search_result, structural_layout='', structural_layout_reverse=False):
 
 	if structural_layout == 'none':
-	    return [search_result]
-	    
+	    return { 'none-structural': search_result,
+                     'atbibliotopic_structural_layout': ('none-structural',),
+                     'atbibliotopic_structural_heads_mapping': {'none-structural': ''}, 
+                     'unallocatable_search_result_items': [], }
+                     
 	catalog = getToolByName(self, 'portal_catalog')
 	putils = getToolByName(self, 'plone_utils')
 	bib_tool = getToolByName(self, 'portal_bibliography')
@@ -411,79 +416,127 @@ class BibliographyTopic(ATTopic):
 	structure_by = []
     	
 	data_objects = []
-	for item in search_result:
-	    path = item.getPath()
-	    item_url = item.getURL()
-	    brain_data = {
-		'path' : path,
-		'absolute_url': item_url,
-	        'Title': putils.pretty_title_or_id(item),
-		'icon': item.getIcon,
-                'obj': item.getObject(),
-	    }
-	    for index in catalogIndexes:
-		if hasattr(item, index) and (eval('item.%s' % index) != Missing.Value):
-		    brain_data[index] = eval('item.%s' % index)
-	    
-            data_objects.append(brain_data)
-            structure_by_item = None
-	    if structural_layout in brain_data.keys():
-                structure_by_item = brain_data[structural_layout]
         
-            elif callable(getattr(brain_data['obj'], structural_layout, None)):
-                structure_by_method = getattr(brain_data['obj'], structural_layout, None)
+        ###
+        ### find the raw headlines for the substructure of the smart bibliography list
+        ###
+	for item in search_result:
+
+            structure_by_item = None
+	    if item.has_key(structural_layout):
+                structure_by_item = item[structural_layout]
+        
+            elif callable(getattr(item.getObject(), structural_layout, None)):
+                structure_by_method = getattr(item.getObject(), structural_layout, None)
                 try:
                     structure_by_item = structure_by_method()
                 except:
                     pass    
-                
+            
             if type(structure_by_item) in (types.TupleType, types.ListType):
 	        for item in structure_by_item:
                     if item not in structure_by:
                         structure_by.append(item)
-            elif structure_by_item:
+                        
+            elif structure_by_item in ('', u'', ):
+	        pass
+
+            elif structure_by_item is not None:
 	        structure_by.append(structure_by_item)
                     
         structural_heads = []
         structural_refs = { 'atbibliotopic_structural_heads_mapping': {}, }
-        resolve_heads2atobjects = False
+        sort_by_raw_structhead = False
+        
+        ###
+        ### find the friendly-name headlines for the substructure of the smart bibliography list
+        ###
         for struct_head in structure_by:
 
             if struct_head not in structural_refs.keys():
+
                 structural_heads.append(struct_head)
                 structural_refs[struct_head] = []
 
                 ref_obj = at_tool.lookupObject(struct_head)
-                if ref_obj and ref_obj.Title() not in structural_refs.keys():
-                    structural_refs['atbibliotopic_structural_heads_mapping'][struct_head] = ref_obj.Title()
-                    
+                if ref_obj and ref_obj.title_or_id():
+                    structural_refs['atbibliotopic_structural_heads_mapping'][struct_head] = ref_obj.title_or_id()
+                                    
+                elif type(struct_head) is types.BooleanType:
+                    sort_by_raw_structhead = True
+                    del structural_refs[struct_head]
+                    structural_refs[int(struct_head)] = []
+                    structural_refs['atbibliotopic_structural_heads_mapping'][int(struct_head)] = self.translate(domain='plone', msgid='%s_%s' % (int(struct_head), structural_layout), default='%s: %s' % (structural_layout, struct_head))
+
                 else:
-                    structural_refs['atbibliotopic_structural_heads_mapping'][struct_head] = self.translate(domain='plone', msgid=struct_head, default=struct_head)
+                    structural_refs['atbibliotopic_structural_heads_mapping'][struct_head] = self.translate(domain='plone', msgid=str(struct_head), default=str(struct_head))
                 
-        # sort structural layout by mapped structural heads (either object title or i18n translation (if any))...
-        mapped_struct_heads = zip(structural_refs['atbibliotopic_structural_heads_mapping'].values(), structural_refs['atbibliotopic_structural_heads_mapping'].keys())
         
-        mapped_struct_heads.sort()
-	if structural_layout_reverse:
-	    mapped_struct_heads.reverse()
+        ###
+        ### sort structural layout by mapped structural heads (either object title or i18n translation (if any))...
+        ### if the field to substructure by is a BooleanField, we need to handle the sort order in a reverse manner
+        ###        
+        structheads_and_mappings = structural_refs['atbibliotopic_structural_heads_mapping'].items()
+        if not sort_by_raw_structhead:
+            mappings_and_structheads = [ (putils.normalizeString(item[1]), item[1], item[0]) for item in structheads_and_mappings ]
+        
+            mappings_and_structheads.sort()
+            if structural_layout_reverse:
+	        mappings_and_structheads.reverse()
             
+            structheads_and_mappings = [ (item[2], item[1]) for item in mappings_and_structheads ]
+        
+        else:
+        
+            structheads_and_mappings.sort()
+            if not structural_layout_reverse:
+	        structheads_and_mappings.reverse()
+
+        ###
+        ### put all the structural metadata for the page template together
+        ### 
         structural_refs['atbibliotopic_structural_layout'] = []
-        for struct_head in mapped_struct_heads:
-            structural_refs['atbibliotopic_structural_layout'].append(struct_head[1])
-            
+        for struct_head in structheads_and_mappings:
+            structural_refs['atbibliotopic_structural_layout'].append(struct_head[0])
+
+
+        ###
+        ### prepare container for unallocatable search result brains
+        ###
+        structural_refs['atbibliotopic_structural_layout'].append('unallocatable_search_result_items')
+        structural_refs['atbibliotopic_structural_heads_mapping']['unallocatable_search_result_items'] = self.translate(domain='plone', msgid='structurallayout_unallocatable_search_result_items', default='Further Publications (that cannot be allocated to any of the above categories)')
+        structural_refs['unallocatable_search_result_items'] = []
+
+        ###
+        ### fill the structure_refs with brain objects
+        ###
         for item in search_result:
 		    
 	    for struct_head in structural_heads:
             
-                if item.has_key(structural_layout) and (struct_head in item[structural_layout]):
+                structure_by_method = None
+                if item.has_key(structural_layout) and ((type(struct_head) in (types.TupleType, types.ListType, types.StringType) and struct_head in item[structural_layout]) or (struct_head == item[structural_layout])):
 		    structural_refs[struct_head].append(item)
+                    continue
                 
-                elif callable(getattr(brain_data['obj'], structural_layout, None)):
+                if callable(getattr(item.getObject(), structural_layout, None)):
                     structure_by_method = getattr(item.getObject(), structural_layout, None)
-                    if struct_head in structure_by_method():
-		        structural_refs[struct_head].append(item)
-                
-                
+                    if ((type(struct_head) in (types.TupleType, types.ListType, types.StringType)) and (struct_head in structure_by_method())) or (struct_head == structure_by_method()):
+		        structural_refs[struct_head].append(item)                            
+                        continue
+
+                if ((item.has_key(structural_layout) and not item[structural_layout]) or (structure_by_method and not structure_by_method())):
+                    if item.getRID() not in [ brain.getRID() for brain in structural_refs['unallocatable_search_result_items'] if brain is not None ]:
+                        structural_refs['unallocatable_search_result_items'].append(item)
+            
+        ### 
+        ### purge empty substructures (if any) from structural refs (avoid having headlines with no content)
+        ###
+        for key in [ refkey for refkey in structural_refs.keys() if refkey not in ('atbibliotopic_structural_layout', 'atbibliotopic_structural_heads_mapping', 'unallocatable_search_result_items') ]:
+            if structural_refs[key] == []:
+                del structural_refs[key]
+                structural_refs['atbibliotopic_structural_layout'].remove(key)
+                del structural_refs['atbibliotopic_structural_heads_mapping'][key]
                 
 	return structural_refs
 
@@ -516,7 +569,13 @@ class BibliographyTopic(ATTopic):
 
             for key, value in criterion.getCriteriaItems():
             
-                query[key] = value
+                if key not in ('sort_on', 'sort_order'):
+                    query[key] = value
+                elif key == 'sort_on':
+                    query['atbibliotopic_sort_on'] = value
+                elif key == 'sort_order':
+                    query['atbibliotopic_sort_order'] = value
+                
 
 	if query and not query.has_key('portal_type'):
     	    query['portal_type'] = tuple(bib_tool.getReferenceTypes())
@@ -531,6 +590,103 @@ class BibliographyTopic(ATTopic):
 		    pass
 
         return query or None
+
+    security.declareProtected(permissions.View, 'queryCatalog')
+    def queryCatalog(self, REQUEST=None, batch=False, b_size=None,
+                                                    full_objects=False, **kw):
+        """Invoke the catalog using our criteria to augment any passed
+            in query before calling the catalog.
+        """
+        if REQUEST is None:
+            REQUEST = getattr(self, 'REQUEST', {})
+        b_start = REQUEST.get('b_start', 0)
+
+        q = self.buildQuery()
+        if q is None:
+            # empty query - do not show anything
+            if batch:
+                return Batch([], 20, int(b_start), orphan=0)
+            return []
+            
+        ## ATBiblioTopic speciality (compared to ATTopic)
+        sequence_sort_on = None
+        sequence_sort_order = None
+        if q.has_key('atbibliotopic_sort_order'):
+            if q.has_key('atbibliotopic_sort_on'):
+                sequence_sort_order = q['atbibliotopic_sort_order']
+            else:
+                q['sort_order'] = q['atbibliotopic_sort_order']    
+            del q['atbibliotopic_sort_order']
+        if q.has_key('atbibliotopic_sort_on'):
+            sequence_sort_on = q['atbibliotopic_sort_on']
+            del q['atbibliotopic_sort_on']
+            
+        # Allow parameters to further limit existing criterias
+        for k,v in q.items():
+            if kw.has_key(k):
+                arg = kw.get(k)
+                if isinstance(arg, (ListType,TupleType)) and isinstance(v, (ListType,TupleType)):
+                    kw[k] = [x for x in arg if x in v]
+                elif isinstance(arg, StringType) and isinstance(v, (ListType,TupleType)) and arg in v:
+                    kw[k] = [arg]
+                else:
+                    kw[k]=v
+            else:
+                kw[k]=v
+
+        pcatalog = getToolByName(self, 'portal_catalog')
+        limit = self.getLimitNumber()
+        max_items = self.getItemCount()
+        # Batch based on limit size if b_szie is unspecified
+        if max_items and b_size is None:
+            b_size = int(max_items)
+        else:
+            b_size = b_size or 20
+        if not batch and limit and max_items and self.hasSortCriterion():
+            # Sort limit helps Zope 2.6.1+ to do a faster query
+            # sorting when sort is involved
+            # See: http://zope.org/Members/Caseman/ZCatalog_for_2.6.1
+            kw.setdefault('sort_limit', max_items)
+        __traceback_info__ = (self, kw,)
+        raw_results = pcatalog.searchResults(REQUEST, **kw)
+        
+        if sequence_sort_on:
+            sequence_sort_on = sequence_sort_on.replace('"', "'")
+            
+            if sequence_sort_order == 'reverse':
+                sequence_sort_on = sequence_sort_on.replace("'asc'", "'asc-temp'").replace("'desc'", "'asc'").replace("'asc-temp'", "'desc'")
+        
+            sequence_sort_on_tuple = tuple([ tuple(i.split(', ')) for i in tuple(sequence_sort_on.replace("'", "").lstrip('(').rstrip(')').split('), (')) ])
+            results = sequence.sort(raw_results, sequence_sort_on_tuple)
+        else: 
+            results = raw_results
+            
+        if full_objects and not limit:
+            results = [b.getObject() for b in results]
+        if batch:
+            batch = Batch(results, b_size, int(b_start), orphan=0)
+            return batch
+        if limit:
+            if full_objects:
+                return [b.getObject() for b in results[:max_items]]
+            return results[:max_items]
+        return results
+
+    security.declareProtected(atct_permissions.ChangeTopics, 'addCriterion')
+    def addCriterion(self, field, criterion_type):
+    
+        """Add a new search criterion. Return the resulting object.
+        """
+        putils = getToolByName(self, 'plone_utils')
+        if field.lower() == putils.normalizeString(field):
+            newid = 'crit__%s_%s' % (field, criterion_type)
+        else:
+            newid = 'crit__%s_%s' % (putils.normalizeString(field), criterion_type)
+        ct    = _criterionRegistry[criterion_type]
+        crit  = ct(newid, field)
+        self._setObject( newid, crit )
+        return self._getOb( newid )
+                                                                    
 
     security.declareProtected(permissions.View, 'getBiblioTopicCriteriaIndex')
     def getBiblioTopicCriteriaIndex(self, index_name):
@@ -550,7 +706,7 @@ class BibliographyTopic(ATTopic):
 	if display_list:
 	    flat = []
 	    for a in allowed:
-	        desc = _criterionRegistry[a].shortDesc
+	        desc = self.translate(_criterionRegistry[a].shortDesc)
 	        flat.append((a,desc))
 	    allowed = DisplayList(flat)
 	return allowed
@@ -577,7 +733,7 @@ class BibliographyTopic(ATTopic):
         """Return a list of available sort fields.
         """
 	return [ sort_field['field'] for sort_field in BIBLIOTOPIC_SORTFIELDS if self.validateAddCriterion(sort_field['field'][0], 'ATSortCriterion') ]
-
+	
     security.declareProtected(permissions.View, 'listBibReferenceTypes')
     def listBibReferenceTypes(self):
         """Return a DisplayList containing all available bibref items

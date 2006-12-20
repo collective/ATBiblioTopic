@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ATBiblioTopic svn/trunk\n"
-"POT-Creation-Date: 2006-12-19 10:29+0000\n"
+"POT-Creation-Date: 2006-12-20 13:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,18 @@ msgstr ""
 "Domain: atbibliotopic\n"
 "Report-Msgid-Bugs-To: m.gabriel@sunweavers.net\n"
 
+#: ./skins/bibliography_topic/bibliotopic_criterion_save.cpy:32
+msgid "Changes saved."
+msgstr ""
+
 #. Default: "Full text search for authors of bibliographical entries (SearchableText expression)."
 #: catalog indexes / criteria
 msgid "Full text search for authors of bibliographical entries (SearchableText expression)."
 msgstr ""
 
-#: ./skins/bibliography_topic/bibliotopic_criterion_save.cpy:32
-msgid "Changes saved."
+#. Default: "Full text search for title of referenced bibliographical items."
+#: catalog indexes / criteria
+msgid "Full text search for title of referenced bibliographical items."
 msgstr ""
 
 #. Default: "Publication date of referenced bibliographical items."
@@ -59,11 +64,6 @@ msgstr ""
 #. Default: "This criterion looks at all searchable text passages in bibliographical reference items."
 #: catalog indexes / criteria
 msgid "This criterion looks at all searchable text passages in bibliographical reference items."
-msgstr ""
-
-#. Default: "Full text search for title of referenced bibliographical items."
-#: catalog indexes / criteria
-msgid "Full text search for title of referenced bibliographical items."
 msgstr ""
 
 #. Default: "No bibliographical references have been found for this context."
@@ -113,7 +113,7 @@ msgstr ""
 
 #. Default: "Do explicitly show non-published bibliographical entries if the the authenticated user has permission to modify the entry's content."
 #: ./content/bibliotopic.py
-msgid "help_bibliotopic_nowfstatefilterusercanmodifybibrefcontent"
+msgid "help_bibliotopic_nowfstatefilterifusercanmodifybibrefcontent"
 msgstr ""
 
 #. Default: "Bibliographical style used for display. You can either choose one of the hard-coded bibliography styles here or utilize your own bibliography styles from your custom style sets."
@@ -121,7 +121,7 @@ msgstr ""
 msgid "help_bibliotopic_presentation"
 msgstr ""
 
-#. Default: "Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose publication year here and use authors as the lists sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names."
+#. Default: "Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose 'Publication Year' here and use 'Authors' as the list's sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names."
 #: ./content/bibliotopic.py
 msgid "help_bibliotopic_structurallayout"
 msgstr ""

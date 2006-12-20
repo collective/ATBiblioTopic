@@ -18,7 +18,7 @@ msgstr ""
 msgid "Smart Bibliography List"
 msgstr ""
 
-#. Default: "Use this folderish content type to specify a bibliography search criterion. According to the specified search criteria, a smart bibliography list always renders a current list of your site's bibliographical reference items."
+#. Default: "Use this folderish content type to specify a set of bibliography search criteria. According to the specified search criteria, this smart bibliography list will always render a current list of your site's bibliographical reference items."
 #: ./content/bibliotopic.py
 msgid "description_edit_bibliotopic"
 msgstr ""
@@ -96,5 +96,50 @@ msgstr ""
 #. Default: "Sinle (Co)Authors"
 #: vocabularies from config.py
 msgid "Single (Co)Authors"
+msgstr ""
+
+#. Default: "Further publications (that cannot be allocated to any of the above categories)"
+#: ./content/bibliotopic.py
+msgid "structurallayout_unallocatable_search_result_items"
+msgstr ""
+
+#. Default: "Authors (ascending), Publication year (ascending)"
+#: catalog indexes / criteria
+msgid "Authors (ascending), Publication year (ascending)"
+msgstr ""
+
+#. Default: "Sort referenced bibliographical items by author(s) (ascending) first and then by publication year (ascending)."
+#: catalog indexes / criteria
+msgid "Sort referenced bibliographical items by author(s) (ascending) first and then by publication year (ascending)."
+msgstr ""
+
+#. Default: "Authors (ascending), Publication year (descending)"
+#: catalog indexes / criteria
+msgid "Authors (ascending), Publication year (descending)"
+msgstr ""
+
+#. Default: "Sort referenced bibliographical items by author(s) (ascending) first and then by publication year (descending)."
+#: catalog indexes / criteria
+msgid "Sort referenced bibliographical items by author(s) (ascending) first and then by publication year (descending)."
+msgstr ""
+
+#. Default: "Publication year (ascending), Authors (ascending)"
+#: catalog indexes / criteria
+msgid "Publication year (ascending), Authors (ascending)"
+msgstr ""
+
+#. Default: "Sort referenced bibliographical items by publication year (ascending) first and then by author(s) (ascending)."
+#: catalog indexes / criteria
+msgid "Sort referenced bibliographical items by publication year (ascending) first and then by author(s) (ascending)."
+msgstr ""
+
+#. Default: "Publication year (descending), Authors (ascending)"
+#: catalog indexes / criteria
+msgid "Publication year (descending), Authors (ascending)"
+msgstr ""
+
+#. Default: "Sort referenced bibliographical items by publication year (descending) first and then by author(s) (ascending)."
+#: catalog indexes / criteria
+msgid "Sort referenced bibliographical items by publication year (descending) first and then by author(s) (ascending)."
 msgstr ""
 

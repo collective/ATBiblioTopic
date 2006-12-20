@@ -50,9 +50,9 @@
                             bs_tool here/portal_bibliostyles;
 			    types_tool here/portal_types;">
 		    
-	<tal:loop tal:repeat="structural_head python: structural_heads">
+	<tal:loop tal:repeat="structural_head python: [ structhead for structhead in structural_heads if structhead != 'unallocatable_search_result_items'] + ['unallocatable_search_result_items']">
 
-        <h3 tal:condition="python: (len(structural_heads) > 1)" tal:content="python: structural_heads_mapping[structural_head]" />
+        <h3 tal:condition="python: len(structural_refs[structural_head]) > 0" tal:content="python: structural_heads_mapping[structural_head]" />
 	
         <tal:structural-layout tal:define="formatted_list python:bs_tool.formatList(structural_refs[structural_head], style, instance=here, title_link=t_link, title_link_only_if_owner=t_link_owner, brains_object=True, sort=False);">
 

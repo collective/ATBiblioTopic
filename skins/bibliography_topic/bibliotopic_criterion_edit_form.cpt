@@ -153,16 +153,16 @@
                         id="field"
                         tabindex=""
                         onchange=""
+                        i18n:domain="plone"
                         tal:attributes="tabindex tabindex/next;
                                         onchange string:javascript:showHelp(this.options[this.selectedIndex], 'fieldHelp');">
                 <tal:options tal:repeat="field fields">
                     <option value=""
-                            tal:define="explanation python:field[2]"
+                            tal:define="explanation python:here.translate(domain='atbibliotopic', msgid=field[2], default=field[2])"
                             tal:attributes="value python:field[0];
-                                            title python:explanation"
+                                            title explanation"
                             tal:content="python:field[1]"
                             tal:condition="python:here.allowedCriteriaForField(field[0])"
-                            i18n:domain="atcontenttypes"
                             i18n:attributes="title"
                             i18n:translate="">
                             Field
@@ -189,7 +189,7 @@
 
                     <option value="" tal:repeat="type types"
                                      tal:attributes="value type/name"
-                                     i18n:translate=""
+                                     i18n:translate="">
                                      tal:content="type/description">Type</option>
 
                 </select>
@@ -250,14 +250,14 @@
                          <option value=""
                                  tal:define="explanation python:field[2]"
                                  tal:attributes="value python:field[0];
-                                                 selected python:here.hasSortCriterion() and here.getSortCriterion().field==field[0];
+                                                 selected python:here.hasSortCriterion() and here.getSortCriterion().field==str(field[0]);
                                                  title explanation"
                                  tal:content="python:field[1]"
                                  i18n:attributes="title"
                                  i18n:translate="">Field</option>
+                    
                      </tal:block>
                 </select>
-
             </div>
 
 

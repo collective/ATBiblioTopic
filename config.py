@@ -115,16 +115,32 @@ BIBLIOTOPIC_CRITERIAFIELDS = [
 ] + BIBLIOTOPIC_EXTENDEDSCHEMATA_CRITERIAFIELDS
 BIBLIOTOPIC_SORTFIELDS = [
     {
-	'field'		: ( 'publication_year', 'Publication Year', 'Publication year of referenced bibliographical items.',),
-	'ctypes'	: ('ATSortCriterion',),
-    },	
-    {
-	'field'		: ('Authors','Authors', 'Author(s) of referenced bibliographical items.',),
+	'field'		: ((('Authors','nocase','asc')),'Authors', 'Author(s) of referenced bibliographical items.',),
 	'ctypes'	: ('ATSortCriterion', ),
     },	
     {
-	'field'		: ('sortable_title','Title', 'Title of referenced bibliographical items.',''),
+	'field'		: ('publication_year', 'Publication Year', 'Publication year of referenced bibliographical items.',),
 	'ctypes'	: ('ATSortCriterion',),
+    },	
+    {
+	'field'		: ('sortable_title','Title', 'Title of referenced bibliographical items.',),
+	'ctypes'	: ('ATSortCriterion',),
+    },	
+    {
+	'field'		: ((('publication_year', 'cmp', 'desc'),('Authors', 'nocase', 'asc')), 'Publication year (descending), Authors (ascending)', 'Sort referenced bibliographical items by publication year (descending) first and then by author(s) (ascending).', ),
+	'ctypes'	: ('ATSortCriterion', ),
+    },	
+    {
+	'field'		: ((('publication_year', 'cmp', 'asc'),('Authors', 'nocase', 'asc')), 'Publication year (ascending), Authors (ascending)', 'Sort referenced bibliographical items by publication year (ascending) first and then by author(s) (ascending).', ),
+	'ctypes'	: ('ATSortCriterion', ),
+    },	
+    {
+	'field'		: ((('Authors', 'nocase', 'asc'),('publication_year', 'cmp', 'desc')), 'Authors (ascending), Publication year (descending)', 'Sort referenced bibliographical items by author(s) (ascending) first and then by publication year (descending).', ),
+	'ctypes'	: ('ATSortCriterion', ),
+    },	
+    {
+	'field'		: ((('Authors', 'nocase', 'asc'),('publication_year', 'cmp', 'asc')), 'Authors (ascending), Publication year (ascending)', 'Sort referenced bibliographical items by author(s) (ascending) first and then by publication year (ascending).', ),
+	'ctypes'	: ('ATSortCriterion', ),
     },	
 ]
 
