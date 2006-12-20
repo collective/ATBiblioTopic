@@ -65,7 +65,7 @@ from Products.CMFBibliographyAT.config import \
      PROJECTNAME as BIBLIOGRAPHY_PROJECTNAME
      
 from Products.CMFBibliographyAT.content.folder import BibliographyFolder, LargeBibliographyFolder
-          
+FURTHER_PUBLICATIONS = 'Further Publications (that cannot be allocated to any of the above categories)'
 """
 bibliotopic.py: renders a smart bibliography list based on ATTopic
 """
@@ -152,6 +152,19 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
                 description="Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose 'Publication Year' here and use 'Authors' as the list's sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names.",
                 i18n_domain="atbibliotopic",
                 format="pulldown",
+                visible={'edit':'visible','view':'invisible'},
+            ),
+        ),
+        StringField('alternativeHeadlineForUnallocatableBibrefs',
+            multiValued=0,
+            default = '',
+    	    languageIndependent = False,
+            widget=StringWidget(
+                label="Alternative Headline for Unallocatable Bibliographical Entries",
+                label_msgid="label_bibliotopic_alternativeheadlineforunallocatablebibrefs",
+                description_msgid="help_bibliotopic_alternativeheadlineforunallocatablebibrefs",
+                description="If using the structural layout feature, you can use this field to suggest an alternative headline for bibliographical entries that cannot be allocated to any of the paragraphs resulting from the structural layout feature. Anything given here will override the phrase '%s'." % FURTHER_PUBLICATIONS,
+                i18n_domain="atbibliotopic",
                 visible={'edit':'visible','view':'invisible'},
             ),
         ),
@@ -504,7 +517,10 @@ class BibliographyTopic(ATTopic):
         ### prepare container for unallocatable search result brains
         ###
         structural_refs['atbibliotopic_structural_layout'].append('unallocatable_search_result_items')
-        structural_refs['atbibliotopic_structural_heads_mapping']['unallocatable_search_result_items'] = self.translate(domain='plone', msgid='structurallayout_unallocatable_search_result_items', default='Further Publications (that cannot be allocated to any of the above categories)')
+        if self.getAlternativeHeadlineForUnallocatableBibrefs():
+            structural_refs['atbibliotopic_structural_heads_mapping']['unallocatable_search_result_items'] = self.getAlternativeHeadlineForUnallocatableBibrefs()
+        else:
+            structural_refs['atbibliotopic_structural_heads_mapping']['unallocatable_search_result_items'] = self.translate(domain='plone', msgid='structurallayout_unallocatable_search_result_items', default=FURTHER_PUBLICATIONS)
         structural_refs['unallocatable_search_result_items'] = []
 
         ###

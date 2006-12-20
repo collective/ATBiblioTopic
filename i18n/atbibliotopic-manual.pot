@@ -63,6 +63,16 @@ msgstr ""
 msgid "help_bibliotopic_structurallayoutreversesortorder"
 msgstr ""
 
+#. Default: "Alternative Headline for Unallocatable Bibliographical Entries"
+#: ./content/bibliotopic.py
+msgid "label_bibliotopic_alternativeheadlineforunallocatablebibrefs"
+msgstr ""
+
+#. Default: "If using the structural layout feature, you can use this field to suggest an alternative headline for bibliographical entries that cannot be allocated to any of the paragraphs resulting from the structural layout. Anything given here will override the phrase 'Further Publications (that cannot be allocated to any of the above categories)'."
+#: ./content/bibliotopic.py
+msgid "help_bibliotopic_alternativeheadlineforunallocatablebibrefs"
+msgstr ""
+
 #. Default: "Bibliographical Style"
 #: ./content/bibliotopic.py
 msgid "label_bibliotopic_presentation"

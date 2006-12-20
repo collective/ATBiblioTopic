@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ATBiblioTopic 0.9\n"
 "POT-Creation-Date: 2004-04-13 21:25+0000\n"
-"PO-Revision-Date: 2006-12-15 13:42+0100\n"
-"Last-Translator: Florian Lohmann <flohmann@ecology.uni-kiel.de>\n"
+"PO-Revision-Date: 2006-12-20 23:13-0000\n"
+"Last-Translator: Mike Gabriel <m.gabriel@sunweavers.net>\n"
 "Language-Team: ATBiblioTopic i18n <plone-biblio@zaubberer.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -17,14 +17,19 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
 
+#: skins/bibliography_topic/bibliotopic_criterion_save.cpy:32
+msgid "Changes saved."
+msgstr "Änderungen wurden gespeichert."
+
 #. Default: "Full text search for authors of bibliographical entries (SearchableText expression)."
 #: catalog indexes / criteria
 msgid "Full text search for authors of bibliographical entries (SearchableText expression)."
 msgstr "Volltextsuche nach Autor(en) von Literatureinträgen (SearchableText Ausdruck)"
 
-#: skins/bibliography_topic/bibliotopic_criterion_save.cpy:32
-msgid "Changes saved."
-msgstr "Änderungen wurden gespeichert."
+#. Default: "Full text search for title of referenced bibliographical items."
+#: catalog indexes / criteria
+msgid "Full text search for title of referenced bibliographical items."
+msgstr "Volltextsuche nach Titeln referenzierter Publikationen"
 
 #. Default: "Publication date of referenced bibliographical items."
 #: catalog indexes / criteria
@@ -61,11 +66,6 @@ msgstr "Wählen Sie einen Teilbaum (i.e. einen Ordner) Ihrer Website, auf den die
 msgid "This criterion looks at all searchable text passages in bibliographical reference items."
 msgstr "Dieses Kriterium durchsucht alle Textfelder in Literatureinträgen nach dem spezifizierten Suchschlüssel."
 
-#. Default: "Full text search for title of referenced bibliographical items."
-#: catalog indexes / criteria
-msgid "Full text search for title of referenced bibliographical items."
-msgstr "Volltextsuche nach Titeln referenzierter Publikationen"
-
 #. Default: "No bibliographical references have been found for this context."
 #: skins/bibliography_topic/bibliotopic_view.pt
 msgid "bibliotopic_nothing_listed"
@@ -80,6 +80,11 @@ msgstr "Literaturverweise"
 #: content/bibliotopic.py
 msgid "help_associated_bibfolder"
 msgstr "Ordnet dieser Intelligenten Listeraturliste einen Bibliographieordner im Portal zu, um gegebenenfalls Literaturverweise in den assoziierten Bibliographieordner hochzuladen (Bibliographieimport)."
+
+#. Default: "If using the structural layout feature, you can use this field to suggest an alternative headline for bibliographical entries that cannot be allocated to any of the paragraphs resulting from the structural layout. Anything given here will override the phrase 'Further Publications (that cannot be allocated to any of the above categories)'."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_alternativeheadlineforunallocatablebibrefs"
+msgstr "Falls Sie für diese Intelligente Literaturliste die  Untergliederungsfunktion verwenden möchten, können Sie dieses Feld dazu verwenden, eine alternative Überschrift für Literatureinträge, die keiner Untergliederung zuzuordnen sind, anzugeben. Text, den Sie hier spezifizieren ersetzt die Phrase 'Weitere Publikationen (die keiner der oben genannten Kategorien zuordbar sind)'."
 
 #. Default: "Show bibliographical reference items only if their workflow state allows it."
 #: content/bibliotopic.py
@@ -106,7 +111,7 @@ msgstr "Soll der Titel eines Eintrages in der Literaturliste zur Seite des jewei
 msgid "help_bibliotopic_linktooriginalrefonlyifowner"
 msgstr "Wenn die Funktion 'Zu Literatureinträgen verlinken' aktiviert ist, nur die Literatureinträge verlinken, für die der authentifizierte Benutzer als Besitzer (ZOPE-Rolle) registriert ist. "
 
-#. Default: "HTML list format used for the list of bibliographical items. If you do not want your bibliography list arranged in HTML lists, choose 'Simple lines list' here."
+#. Default: "HTML format used for the list of bibliographical items. If you do not want your bibliography list arranged in HTML lists or tables, choose 'Simple lines list' here."
 #: content/bibliotopic.py
 msgid "help_bibliotopic_listinglayout"
 msgstr "HTML-Format für Intelligente Listeraturliste. Wenn Sie keine HTML-Liste oder -Tabelle wünschen, wählen Sie hier: 'Einfache Liste'."
@@ -141,6 +146,11 @@ msgstr "Grenzen Sie die Suchergebnisse der übergeordneten Intelligenten Literatu
 msgid "label_associated_bibfolder"
 msgstr "Assoziierter Bibliographieordner"
 
+#. Default: "Alternative Headline for Unallocatable Bibliographical Entries"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_alternativeheadlineforunallocatablebibrefs"
+msgstr "Alternative Überschrift für unzuordbare Literatureinträge"
+
 #. Default: "Filter References By Workflow State"
 #: content/bibliotopic.py
 msgid "label_bibliotopic_filterreferencesbyworkflowstate"
@@ -171,7 +181,7 @@ msgstr "Zu Literatureinträgen nur velinken wenn Besitzer"
 msgid "label_bibliotopic_listinglayout"
 msgstr "Layout der Literaturliste (HTML)"
 
-#. Default: "No Workflow State Filter If User can Modify Content of Bibliographical Entry"
+#. Default: "No Workflow State Filter if User can Modify Content of Bibliographical Entry"
 #: content/bibliotopic.py
 msgid "label_bibliotopic_nowfstatefilterifusercanmodifybibrefcontent"
 msgstr "Kein Workflow-Status-Filter für Literatureinträge, die der Benutzer bearbeiten kann"

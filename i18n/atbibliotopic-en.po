@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ATBiblioTopic 0.9\n"
 "POT-Creation-Date: 2004-04-13 21:25+0000\n"
-"PO-Revision-Date: 2006-12-14 21:02+0100\n"
-"Last-Translator: Florian Lohmann <flohmann@ecology.uni-kiel.de>\n"
+"PO-Revision-Date: 2006-12-20 23:07-0000\n"
+"Last-Translator: Mike Gabriel <m.gabriel@sunweavers.net>\n"
 "Language-Team: ATBiblioTopic i18n <plone-biblio@zaubberer.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -17,14 +17,19 @@ msgstr ""
 "Preferred-Encodings: latin1\n"
 "X-Is-Fallback-For: en-au en-bz en-ca en-ie en-jm en-nz en-ph en-za en-tt en-gb en-us en-zw\n"
 
+#: skins/bibliography_topic/bibliotopic_criterion_save.cpy:32
+msgid "Changes saved."
+msgstr "Changes saved."
+
 #. Default: "Full text search for authors of bibliographical entries (SearchableText expression)."
 #: catalog indexes / criteria
 msgid "Full text search for authors of bibliographical entries (SearchableText expression)."
 msgstr "Full text search for authors of bibliographical entries (SearchableText expression)."
 
-#: skins/bibliography_topic/bibliotopic_criterion_save.cpy:32
-msgid "Changes saved."
-msgstr "Changes saved."
+#. Default: "Full text search for title of referenced bibliographical items."
+#: catalog indexes / criteria
+msgid "Full text search for title of referenced bibliographical items."
+msgstr "Full text search for title of referenced bibliographical items."
 
 #. Default: "Publication date of referenced bibliographical items."
 #: catalog indexes / criteria
@@ -61,11 +66,6 @@ msgstr "Select specific subtrees of your site to be searched for bibliographical
 msgid "This criterion looks at all searchable text passages in bibliographical reference items."
 msgstr "This criterion looks at all searchable text passages in bibliographical reference items."
 
-#. Default: "Full text search for title of referenced bibliographical items."
-#: catalog indexes / criteria
-msgid "Full text search for title of referenced bibliographical items."
-msgstr "Full text search for title of referenced bibliographical items."
-
 #. Default: "No bibliographical references have been found for this context."
 #: skins/bibliography_topic/bibliotopic_view.pt
 msgid "bibliotopic_nothing_listed"
@@ -80,6 +80,11 @@ msgstr "Bibliographical References"
 #: content/bibliotopic.py
 msgid "help_associated_bibfolder"
 msgstr "Associates one of the portal's bibliography folders to this list for the purpose of uploads (bibliography import)."
+
+#. Default: "If using the structural layout feature, you can use this field to suggest an alternative headline for bibliographical entries that cannot be allocated to any of the paragraphs resulting from the structural layout. Anything given here will override the phrase 'Further Publications (that cannot be allocated to any of the above categories)'."
+#: content/bibliotopic.py
+msgid "help_bibliotopic_alternativeheadlineforunallocatablebibrefs"
+msgstr "If using the structural layout feature, you can use this field to suggest an alternative headline for bibliographical entries that cannot be allocated to any of the paragraphs resulting from the structural layout feature. Anything given here will override the phrase 'Further Publications (that cannot be allocated to any of the above categories)'."
 
 #. Default: "Show bibliographical reference items only if their workflow state allows it."
 #: content/bibliotopic.py
@@ -140,6 +145,11 @@ msgstr "Narrow down the search results from the parent Smart Bibliography List b
 #: content/bibliotopic.py
 msgid "label_associated_bibfolder"
 msgstr "Associated Bibliography Folder"
+
+#. Default: "Alternative Headline for Unallocatable Bibliographical Entries"
+#: content/bibliotopic.py
+msgid "label_bibliotopic_alternativeheadlineforunallocatablebibrefs"
+msgstr "Alternative Headline for Unallocatable Bibliographical Entries"
 
 #. Default: "Filter References By Workflow State"
 #: content/bibliotopic.py

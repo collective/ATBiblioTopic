@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ATBiblioTopic svn/trunk\n"
-"POT-Creation-Date: 2006-12-20 13:26+0000\n"
+"POT-Creation-Date: 2006-12-20 23:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,6 +81,11 @@ msgstr ""
 msgid "help_associated_bibfolder"
 msgstr ""
 
+#. Default: "If using the structural layout feature, you can use this field to suggest an alternative headline for bibliographical entries that cannot be allocated to any of the paragraphs resulting from the structural layout. Anything given here will override the phrase 'Further Publications (that cannot be allocated to any of the above categories)'."
+#: ./content/bibliotopic.py
+msgid "help_bibliotopic_alternativeheadlineforunallocatablebibrefs"
+msgstr ""
+
 #. Default: "Show bibliographical reference items only if their workflow state allows it."
 #: ./content/bibliotopic.py
 msgid "help_bibliotopic_filterreferencesbyworkflowstate"
@@ -139,6 +144,11 @@ msgstr ""
 #. Default: "Associated Bibliography Folder"
 #: ./content/bibliotopic.py
 msgid "label_associated_bibfolder"
+msgstr ""
+
+#. Default: "Alternative Headline for Unallocatable Bibliographical Entries"
+#: ./content/bibliotopic.py
+msgid "label_bibliotopic_alternativeheadlineforunallocatablebibrefs"
 msgstr ""
 
 #. Default: "Filter References By Workflow State"
