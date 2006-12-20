@@ -611,16 +611,20 @@ class BibliographyTopic(ATTopic):
         ## ATBiblioTopic speciality (compared to ATTopic)
         sequence_sort_on = None
         sequence_sort_order = None
+        if q.has_key('atbibliotopic_sort_on'):
+	    if q['atbibliotopic_sort_on'] == '(%s)' % q['atbibliotopic_sort_on'][1:-1]:
+        	sequence_sort_on = q['atbibliotopic_sort_on']
+	    else:
+		q['sort_on'] = 	q['atbibliotopic_sort_on']
+	    del q['atbibliotopic_sort_on']
+            
         if q.has_key('atbibliotopic_sort_order'):
-            if q.has_key('atbibliotopic_sort_on'):
+            if sequence_sort_on:
                 sequence_sort_order = q['atbibliotopic_sort_order']
             else:
                 q['sort_order'] = q['atbibliotopic_sort_order']    
             del q['atbibliotopic_sort_order']
-        if q.has_key('atbibliotopic_sort_on'):
-            sequence_sort_on = q['atbibliotopic_sort_on']
-            del q['atbibliotopic_sort_on']
-            
+	    
         # Allow parameters to further limit existing criterias
         for k,v in q.items():
             if kw.has_key(k):

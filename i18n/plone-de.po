@@ -130,7 +130,7 @@ msgstr "Sortiert Literaturverweise zuerst nach Autor(en) (aufsteigend) und dann 
 #. Default: "Publication year (ascending), Authors (ascending)"
 #: catalog indexes / criteria
 msgid "Publication year (ascending), Authors (ascending)"
-msgstr "Publikationsjahr (aufsteigend), Autoren (absteigend)"
+msgstr "Publikationsjahr (aufsteigend), Autoren (aufsteigend)"
 
 #. Default: "Sort referenced bibliographical items by publication year (ascending) first and then by author(s) (ascending)."
 #: catalog indexes / criteria
@@ -140,7 +140,7 @@ msgstr "Sortiert Literaturverweise zuerst nach dem Publikationsjahr (aufsteigend
 #. Default: "Publication year (descending), Authors (ascending)"
 #: catalog indexes / criteria
 msgid "Publication year (descending), Authors (ascending)"
-msgstr "Publikationsjahr (absteigend), Autoren (absteigend)"
+msgstr "Publikationsjahr (absteigend), Autoren (aufsteigend)"
 
 #. Default: "Sort referenced bibliographical items by publication year (descending) first and then by author(s) (ascending)."
 #: catalog indexes / criteria
