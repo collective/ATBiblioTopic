@@ -37,14 +37,14 @@ try:
   from Products.LinguaPlone.public import registerType, listTypes
   from Products.LinguaPlone.public import DisplayList
   from Products.LinguaPlone.public import StringField, ReferenceField, BooleanField, TextField
-  from Products.LinguaPlone.public import SelectionWidget, ReferenceWidget, BooleanWidget, RichWidget
+  from Products.LinguaPlone.public import SelectionWidget, ReferenceWidget, BooleanWidget, RichWidget, StringWidget
   
 except:
   from Products.Archetypes.public import Schema, MetadataSchema
   from Products.Archetypes.public import registerType, listTypes
   from Products.Archetypes.public import DisplayList
   from Products.Archetypes.public import StringField, ReferenceField, BooleanField, TextField
-  from Products.Archetypes.public import SelectionWidget, ReferenceWidget, BooleanWidget, RichWidget
+  from Products.Archetypes.public import SelectionWidget, ReferenceWidget, BooleanWidget, RichWidget, StringWidget
  
 from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import ReferenceBrowserWidget
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
@@ -66,6 +66,7 @@ from Products.CMFBibliographyAT.config import \
      
 from Products.CMFBibliographyAT.content.folder import BibliographyFolder, LargeBibliographyFolder
 FURTHER_PUBLICATIONS = 'Further Publications (that cannot be allocated to any of the above categories)'
+
 """
 bibliotopic.py: renders a smart bibliography list based on ATTopic
 """
@@ -132,8 +133,8 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
             widget=SelectionWidget(
                 label="Layout of Bibliography Listing (HTML)",
                 label_msgid="label_bibliotopic_listinglayout",
-                description_msgid="help_bibliotopic_listinglayout",
                 description="HTML format used for the list of bibliographical items. If you do not want your bibliography list arranged in HTML lists or tables, choose 'Simple lines list' here.",
+                description_msgid="help_bibliotopic_listinglayout",
                 i18n_domain="atbibliotopic",
                 format="pulldown",
                 visible={'edit':'visible','view':'invisible'},
@@ -148,23 +149,10 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
             widget=SelectionWidget(
                 label="Structural Layout",
                 label_msgid="label_bibliotopic_structurallayout",
-                description_msgid="help_bibliotopic_structurallayout",
                 description="Choose a field that shall be used to structure your smart bibliography list. This feature allows you to sort your list of bibliographical items on two levels. Try this: choose 'Publication Year' here and use 'Authors' as the list's sort criterion in the criteria tab of this list. You will get a list of bibliographical references grouped by publication years. For each publication year, however, the bibliographical items will be sorted by author names.",
+                description_msgid="help_bibliotopic_structurallayout",
                 i18n_domain="atbibliotopic",
                 format="pulldown",
-                visible={'edit':'visible','view':'invisible'},
-            ),
-        ),
-        StringField('alternativeHeadlineForUnallocatableBibrefs',
-            multiValued=0,
-            default = '',
-    	    languageIndependent = False,
-            widget=StringWidget(
-                label="Alternative Headline for Unallocatable Bibliographical Entries",
-                label_msgid="label_bibliotopic_alternativeheadlineforunallocatablebibrefs",
-                description_msgid="help_bibliotopic_alternativeheadlineforunallocatablebibrefs",
-                description="If using the structural layout feature, you can use this field to suggest an alternative headline for bibliographical entries that cannot be allocated to any of the paragraphs resulting from the structural layout feature. Anything given here will override the phrase '%s'." % FURTHER_PUBLICATIONS,
-                i18n_domain="atbibliotopic",
                 visible={'edit':'visible','view':'invisible'},
             ),
         ),
@@ -174,10 +162,22 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
             widget=BooleanWidget(
 		label="Reverse Sort Order of Structural Layout",
                 label_msgid="label_bibliotopic_structurallayoutreverseorder",
-                description_msgid="help_bibliotopic_structurallayoutreversesortorder",
                 description="Click here if you want to structure this smart bibliography list in reverse order.",
+                description_msgid="help_bibliotopic_structurallayoutreversesortorder",
                 i18n_domain="atbibliotopic",
                 format="pulldown",
+                visible={'edit':'visible','view':'invisible'},
+            ),
+        ),
+        StringField('alternativeHeadlineForUnallocatableBibrefs',
+            default = '',
+    	    languageIndependent = False,
+            widget=StringWidget(
+                label="Alternative Headline for Unallocatable Bibliographical Entries",
+                label_msgid="label_bibliotopic_alternativeheadlineforunallocatablebibrefs",
+                description="If using the structural layout feature, you can use this field to suggest an alternative headline for bibliographical entries that cannot be allocated to any of the paragraphs resulting from the structural layout feature. Anything given here will override the phrase '%s'." % FURTHER_PUBLICATIONS,
+                description_msgid="help_bibliotopic_alternativeheadlineforunallocatablebibrefs",
+                i18n_domain="atbibliotopic",
                 visible={'edit':'visible','view':'invisible'},
             ),
         ),
@@ -190,8 +190,8 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
             widget=SelectionWidget(
                 label="Bibliographical Style",
                 label_msgid="label_bibliotopic_presentation",
-                description_msgid="help_bibliotopic_presentation",
                 description="Bibliographical style used for display. You can either choose one of the hard-coded bibliography styles here or utilize your own bibliography styles from your custom style sets.",
+                description_msgid="help_bibliotopic_presentation",
                 i18n_domain="atbibliotopic",
                 format="select",
                 visible={'edit':'visible','view':'invisible'},
@@ -202,8 +202,8 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
             widget=BooleanWidget(
                 label="Link to Page of Bibliographical Entry",
                 label_msgid="label_bibliotopic_linktooriginalref",
-                description_msgid="help_bibliotopic_linktooriginalref",
                 description="Should a bibliographical item's title in the list be a link to the page of the bibliographical reference?",
+                description_msgid="help_bibliotopic_linktooriginalref",
                 i18n_domain="atbibliotopic",
                 visible={'edit':'visible','view':'invisible'},
             ),
@@ -225,8 +225,8 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
             widget=BooleanWidget(
                 label="Filter References By Workflow State",
                 label_msgid="label_bibliotopic_filterreferencesbyworkflowstate",
-                description_msgid="help_bibliotopic_filterreferencesbyworkflowstate",
                 description="Show bibliographical reference items only if their workflow state allows it.",
+                description_msgid="help_bibliotopic_filterreferencesbyworkflowstate",
                 i18n_domain="atbibliotopic",
                 visible={'edit':'visible','view':'invisible'},
             ),
@@ -237,8 +237,8 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
             widget=BooleanWidget(
                 label="No Workflow State Filter if User can Modify Content",
                 label_msgid="label_bibliotopic_nowfstatefilterifusercanmodifybibrefcontent",
-                description_msgid="help_bibliotopic_nowfstatefilterifusercanmodifybibrefcontent",
                 description="Do explicitly show non-published bibliographical entries if the authenticated user has permission to modify the entry's content.",
+                description_msgid="help_bibliotopic_nowfstatefilterifusercanmodifybibrefcontent",
                 i18n_domain="atbibliotopic",
                 visible={'edit':'visible','view':'invisible'},
             ),
@@ -252,8 +252,8 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
                 label="Associated Bibliography Folder",
                 checkbox_bound=0,
                 label_msgid="label_associated_bibfolder",
-                description_msgid="help_associated_bibfolder",
                 description="Associates one of the portal's bibliography folders to this list for the purpose of uploads (bibliography import).",
+                description_msgid="help_associated_bibfolder",
                 i18n_domain="atbibliotopic",
             ),      
         ),
@@ -300,7 +300,8 @@ BibliographyTopicSchema.moveField('acquireCriteria', after='biblioTopicHeader')
 BibliographyTopicSchema.moveField('ListingLayout', after='acquireCriteria')
 BibliographyTopicSchema.moveField('StructuralLayout', after='ListingLayout')
 BibliographyTopicSchema.moveField('StructuralLayoutReverseOrder', after='StructuralLayout')
-BibliographyTopicSchema.moveField('PresentationStyle', after='StructuralLayoutReverseOrder')
+BibliographyTopicSchema.moveField('alternativeHeadlineForUnallocatableBibrefs', after='StructuralLayoutReverseOrder')
+BibliographyTopicSchema.moveField('PresentationStyle', after='alternativeHeadlineForUnallocatableBibrefs')
 BibliographyTopicSchema.moveField('linkToOriginalRef', after='PresentationStyle')
 BibliographyTopicSchema.moveField('linkToOriginalRefOnlyIfOwner', after='linkToOriginalRef')
 BibliographyTopicSchema.moveField('filterReferencesByWorkflowState', after='linkToOriginalRefOnlyIfOwner')
