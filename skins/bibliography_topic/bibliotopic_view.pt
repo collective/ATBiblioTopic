@@ -38,8 +38,9 @@
                     tal:define="
 			    structural_layout here/getStructuralLayout;
 			    structural_layout_reverse here/getStructuralLayoutReverseOrder;
-			    search_result python:here.queryCatalog(structural_layout=structural_layout, structural_layout_reverse=structural_layout_reverse);
+			    search_result python:here.queryCatalog();
 			    search_result python:here.filterWfStateIfNotOwnerOfReference(search_result);
+			    search_result python:here.portal_bibliography.filterOutBibEntriesFromNonSearchableBibFolders(search_result);
                             structural_refs python:here.getStructuralLayoutRefs(search_result, structural_layout=structural_layout, structural_layout_reverse=structural_layout_reverse);
                             structural_heads python: structural_refs['atbibliotopic_structural_layout'];
                             structural_heads_mapping python: structural_refs['atbibliotopic_structural_heads_mapping'];
@@ -91,9 +92,9 @@
               </tal:block>
             </tbody>
           </table>
+	<br />
         </tal:bibliotopic>
 
-	<br />
 	</tal:structural-layout>
 	</tal:loop>
 

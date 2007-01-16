@@ -121,7 +121,7 @@ BibliographyTopicSchema = ATTopicSchema.copy() + Schema(
 		description="Narrow down the search results from the parent Smart Bibliography List by using the criteria from this Smart Bibliography List.",
                 description_msgid="help_inherit_criteria",
                 i18n_domain = "atbibliotopic",
-                condition = "python:folder.getParentNode().portal_type == 'BibliographyTopic'",
+                condition = "python:object.getParentNode().portal_type == 'BibliographyTopic'",
             ),
         ),
         StringField('ListingLayout',
@@ -606,6 +606,7 @@ class BibliographyTopic(ATTopic):
 		else:
 		    pass
 
+        #print query
         return query or None
 
     security.declareProtected(permissions.View, 'queryCatalog')
