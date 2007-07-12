@@ -189,7 +189,7 @@
 
                     <option value="" tal:repeat="type types"
                                      tal:attributes="value type/name"
-                                     i18n:translate="">
+                                     i18n:translate=""
                                      tal:content="type/description">Type</option>
 
                 </select>
