@@ -27,6 +27,16 @@
     <script type="text/javascript"
             tal:attributes="src string:$portal_url/modifySelectList.js">
     </script>
+    <script type="text/javascript"
+            tal:attributes="src string:$portal_url/jscalendar/calendar_stripped.js">
+    </script>
+    <script type="text/javascript"
+            tal:attributes="src string:$portal_url/jscalendar/calendar-en.js">
+    </script>
+      <style type="text/css"
+             media="all"
+             tal:content="string:@import url($portal_url/jscalendar/calendar-system.css);">
+      </style>
 
     <script type="text/javascript">
         registerDynamicSelect('criteria_select','field','criterion_type', 'vocabulary','getValidCriteriaForIndex','index');
@@ -105,7 +115,7 @@
                  name="form.button.Save"
                  tabindex=""
                  i18n:attributes="value label_save;"
-                 tal:attributes="tabindex tabindex/next;"
+                 tal:attributes="tabindex tabindex/next|nothing;"
                  />
           <input class="context"
                  type="submit"
@@ -113,7 +123,7 @@
                  name="form.button.Remove"
                  tabindex=""
                  i18n:attributes="value label_remove;"
-                 tal:attributes="tabindex tabindex/next;"
+                 tal:attributes="tabindex tabindex/next|nothing;"
                  />
           <input class="standalone"
                  type="submit"
@@ -121,7 +131,7 @@
                  name="form.button.Cancel"
                  tabindex=""
                  i18n:attributes="value label_cancel;"
-                 tal:attributes="tabindex tabindex/next;"
+                 tal:attributes="tabindex tabindex/next|nothing;"
                  />
         </div>
 
@@ -154,7 +164,7 @@
                         tabindex=""
                         onchange=""
                         i18n:domain="plone"
-                        tal:attributes="tabindex tabindex/next;
+                        tal:attributes="tabindex tabindex/next|nothing;
                                         onchange string:javascript:showHelp(this.options[this.selectedIndex], 'fieldHelp');">
                 <tal:options tal:repeat="field fields">
                     <option value=""
@@ -184,7 +194,7 @@
                     id="criterion_type"
                     tabindex=""
                     tal:define="types here/listSearchCriteriaTypes;"
-                    tal:attributes="tabindex tabindex/next;"
+                    tal:attributes="tabindex tabindex/next|nothing;"
                     i18n:domain="plone">
 
                     <option value="" tal:repeat="type types"
@@ -206,7 +216,7 @@
                        tabindex=""
                        i18n:domain="plone"
                        i18n:attributes="value label_add;"
-                       tal:attributes="tabindex tabindex/next;"
+                       tal:attributes="tabindex tabindex/next|nothing;"
                        />
             </div>
 
@@ -238,7 +248,7 @@
                         id="field"
                         tabindex=""
                         tal:define="fields here/listSortFields"
-                        tal:attributes="tabindex tabindex/next;
+                        tal:attributes="tabindex tabindex/next|nothing;
                                         onchange string:javascript:showHelp(this.options[this.selectedIndex], 'fieldHelpSort');">
 
                      <option value="no_sort"
@@ -287,7 +297,7 @@
                        tabindex=""
                        i18n:attributes="value label_save;"
                        i18n:domain="plone"
-                       tal:attributes="tabindex tabindex/next;"
+                       tal:attributes="tabindex tabindex/next|nothing;"
                        />
             </div>
 

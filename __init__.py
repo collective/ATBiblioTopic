@@ -9,7 +9,13 @@
 
 """ package installer for ATBiblioTopic """
 
-from Products.Archetypes.public import process_types, listTypes
+#from Products.Archetypes.public import process_types, listTypes
+from Products.CMFCore.permissions import AddPortalContent
+try:
+  from Products.LinguaPlone.public import process_types, listTypes
+except:
+  from Products.Archetypes.public import process_types, listTypes
+  
 from Products.CMFCore import utils
 from Products.CMFCore.DirectoryView import registerDirectory
 
@@ -17,7 +23,8 @@ PROJECTNAME = 'ATBiblioTopic'
 GLOBALS = globals()
 skin_names = ('bibliography_topic',)
 
-from config import ADD_CONTENT_PERMISSION
+ADD_CONTENT_PERMISSION = AddPortalContent
+
 
 registerDirectory('skins', GLOBALS)
 

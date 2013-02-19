@@ -12,7 +12,12 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
-
+try: 
+    # Plone 4 and higher 
+    from Products.CMFPlone.CatalogTool import registerIndexableAttribute 
+except: 
+    from plone.indexer.decorator import indexer
+	
 import types
 
 from Acquisition import aq_parent, aq_inner
@@ -23,7 +28,8 @@ from Products.CMFCore import permissions
 from Products.ATContentTypes import permission as atct_permissions
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.CatalogTool import registerIndexableAttribute    
+
+#from Products.CMFPlone.CatalogTool import registerIndexableAttribute    
 
 from AccessControl import ClassSecurityInfo
 from AccessControl import Unauthorized
@@ -33,14 +39,14 @@ from Products.ATContentTypes.criteria import _criterionRegistry
 from Products.ATContentTypes.interfaces import IATTopicSortCriterion
 
 try:
-  from Products.LinguaPlone.public import Schema, MetadataSchema
+  from Products.LinguaPlone.public import Schema, MetadataSchema,BaseSchema
   from Products.LinguaPlone.public import registerType, listTypes
   from Products.LinguaPlone.public import DisplayList
   from Products.LinguaPlone.public import StringField, ReferenceField, BooleanField, TextField
   from Products.LinguaPlone.public import SelectionWidget, ReferenceWidget, BooleanWidget, RichWidget, StringWidget
   
 except:
-  from Products.Archetypes.public import Schema, MetadataSchema
+  from Products.Archetypes.public import Schema, MetadataSchema,BaseSchema
   from Products.Archetypes.public import registerType, listTypes
   from Products.Archetypes.public import DisplayList
   from Products.Archetypes.public import StringField, ReferenceField, BooleanField, TextField
@@ -58,6 +64,8 @@ from Products.ATBiblioTopic.config import BIBLIOTOPIC_CRITERIAFIELDS
 from Products.ATBiblioTopic.config import BIBLIOTOPIC_SORTFIELDS
 from Products.ATBiblioTopic.config import BIBLIOTOPIC_INDEXES
 
+from zope.interface import implements
+from OFS.interfaces import IItem
 # possible types of bibliographic references from module 'CMFBibliographyAT'
 from Products.CMFBibliographyAT.config import \
      FOLDER_TYPES as BIB_FOLDER_TYPES, \
@@ -310,12 +318,11 @@ BibliographyTopicSchema.moveField('associatedBibFolder', after='noWfStateFilterI
 BibliographyTopicSchema.moveField('relatedItems', after='biblioTopicFooter')
 BibliographyTopicSchema.moveField('excludeFromNav', before='allowDiscussion')
 
-class BibliographyTopic(ATTopic):
+class BibliographyTopic(ATTopic,BrowserDefaultMixin):
     """Content type for dynamic listings of bibliographical references.
     """
 
-    __implements__  = (ATTopic.__implements__,
-		      )
+    implements(IATTopicSortCriterion)
 
     schema 	    = BibliographyTopicSchema
 
@@ -323,7 +330,6 @@ class BibliographyTopic(ATTopic):
     meta_type       = 'ATBibliographyTopic'
     portal_type     = 'BibliographyTopic'
     archetype_name  = 'Smart Bibliography List'
-    _at_rename_after_create = True
 
     allowed_content_types = ('BibliographyTopic',)
     default_view    = 'bibliotopic_view'
@@ -383,6 +389,7 @@ class BibliographyTopic(ATTopic):
 
     security = ClassSecurityInfo()
 
+
     security.declareProtected(permissions.View, 'vocabCustomStyle')
     def vocabCustomStyle(self):
         """ build a DisplayList based on existing styles
@@ -426,6 +433,7 @@ class BibliographyTopic(ATTopic):
 	types_tool = getToolByName(self, 'portal_types')
         at_tool = getToolByName(self, 'archetype_tool')
 	catalogIndexes = catalog.indexes()
+	rc = getToolByName(self, 'reference_catalog')
 	
 	structure_by = []
     	
@@ -472,7 +480,7 @@ class BibliographyTopic(ATTopic):
                 structural_heads.append(struct_head)
                 structural_refs[struct_head] = []
 
-                ref_obj = at_tool.lookupObject(struct_head)
+                ref_obj = rc.lookupObject(struct_head)
                 if ref_obj and ref_obj.title_or_id():
                     structural_refs['atbibliotopic_structural_heads_mapping'][struct_head] = ref_obj.title_or_id()
                                     
@@ -806,4 +814,4 @@ class BibliographyTopic(ATTopic):
         # XXX Should have a security check here though!
         self.getAssociatedBibFolder().logImportReport(report)
                                                                                                                                                                                                     
-registerType(BibliographyTopic, PROJECTNAME)
+registerType(BibliographyTopic, 'ATBiblioTopic')

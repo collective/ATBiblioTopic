@@ -6,6 +6,8 @@
 ##bind subpath=traverse_subpath
 ##parameters=
 ##
+from Products.ATContentTypes import ATCTMessageFactory as _
+
 request = context.REQUEST
 indexId=request.get('field')
 criterion_type=request.get('criterion_type')
